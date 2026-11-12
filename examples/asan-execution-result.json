@@ -1,0 +1,10 @@
+{
+  "test_id": "TEST-001",
+  "version": "base",
+  "build_type": "asan",
+  "exit_code": 1,
+  "signal": null,
+  "timeout": false,
+  "stdout": "",
+  "stderr": "==341==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000000024 at pc 0x400abc\n    #0 0x400abc in parse_input /project/src/parser.c:45:7\n    #1 0x400def in main /project/src/main.c:19:3\nSUMMARY: AddressSanitizer: heap-buffer-overflow /project/src/parser.c:45:7 in parse_input\n"
+}
