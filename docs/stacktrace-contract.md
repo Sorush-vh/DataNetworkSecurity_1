@@ -45,4 +45,15 @@ The parser **does not** determine Fixed, Incomplete Fix, New Issue, or Regressio
 Those require matching Base/Patched executions, reference expectations, and
 validating that they refer to the same target issue.
 
+A bare `runtime error: ...` application message is not sufficient UBSan evidence,
+even in a sanitized build. A numbered logger prefix such as `validator:42:`
+is not a source location. The location-based form requires a C/C++ source
+filename together with a recognized diagnostic message, or a corroborating
+native stack frame immediately following the diagnostic. Thus even
+`validator.c:42: runtime error: input invalid` is left unclassified. Explicit
+`ERROR: UndefinedBehaviorSanitizer:` / `SUMMARY: UndefinedBehaviorSanitizer:`
+headers remain supported, including locationless reports. These rules apply to
+both stdout and stderr. Text parsing is evidence extraction, not authentication
+of a log's origin.
+
 This is a draft interface until the group confirms its shared JSON schema.
