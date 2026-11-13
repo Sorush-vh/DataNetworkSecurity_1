@@ -1,0 +1,13 @@
+{
+    "tests": [
+        {
+            "name": "stack_smashing_case_001",
+            "input_file": "stack_smashing_case_001.input",
+            "sha256": "e5f9176ecd90317cf2d4673926c9db65475b0b58e7f468586ddaef280a98cdbd",
+            "error_type": "stack smashing detected",
+            "expected_on_base": true,
+            "expected_on_patched": false,
+            "created_at": "2026-11-12T21:51:27.179396+00:00"
+        }
+    ]
+}
