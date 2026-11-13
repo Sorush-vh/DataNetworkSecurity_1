@@ -153,6 +153,17 @@ The project uses a shared Git repository and a feature-branch workflow.
 
 Each contributor develops their assigned module independently and submits changes through Pull Requests.
 
+## Dynamic execution
+
+Build and run the paired C fixture on Linux x86_64 with Python 3.10+, GCC and GNU binutils.
+
+~~~bash
+PYTHONPATH=src python3 -m security_patch_validator.cli execute \
+  --config examples/execution/config.json --output reports/local/execution.json --pretty
+~~~
+
+See [the dynamic execution guide](docs/execution.md) for container execution, the test oracle, the evidence schema, and integration with patch analysis.
+
 ## Testing and Validation Principles
 
 - Base and patched versions must be evaluated under equivalent test conditions.

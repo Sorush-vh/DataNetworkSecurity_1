@@ -20,7 +20,21 @@ _SUMMARY = re.compile(
 )
 _DEADLY_SIGNAL = re.compile(r"^(?:==\d+==)?\s*AddressSanitizer:DEADLYSIGNAL\s*$")
 _UBSAN_LOCATION = re.compile(
-    r"^(?:(?P<file>.+?):(?P<line>\d+)(?::(?P<column>\d+))?:\s*)?runtime error:\s*(?P<message>.+)$"
+    # A bare application message such as 'runtime error: input invalid' is not
+    # sanitizer evidence. Locationless reports need an explicit sanitizer name
+    # in an ERROR or SUMMARY header, handled by the patterns above.
+    r"^(?P<file>.+?):(?P<line>\d+)(?::(?P<column>\d+))?:\s*runtime error:\s*(?P<message>.+)$"
+)
+_SOURCE_SUFFIX = re.compile(r"\.(?:c|C|cc|cp|cpp|cxx|c\+\+|h|hh|hpp|hxx|ipp|tpp|i|ii)$")
+_UBSAN_MESSAGE = re.compile(
+    r"^(?:(?:signed|unsigned) integer overflow|division by zero|divide by zero|"
+    r"(?:load of|store to|reference binding to|member access within|member call on) |"
+    r"index .* out of bounds|shift exponent |shift base |left shift |"
+    r"negation of |execution reached |passing zero to |"
+    r"null pointer passed as argument|nonnull argument |"
+    r"applying (?:non-zero|zero) offset |pointer index expression |"
+    r"addition of unsigned offset |subtraction of unsigned offset |"
+    r"call to function |.* is outside the range of representable values)"
 )
 _FRAME = re.compile(r"^\s*#(?P<index>\d+)\s+(?P<address>0x[0-9a-fA-F]+)(?:\s+in\s+(?P<function_and_location>.+)|\s+(?P<other>.+))?$", re.ASCII)
 # Only accept source-looking filenames at the end of a symbolized frame. Binary
@@ -154,7 +168,16 @@ def parse_sanitizer_output(stderr: str = "", stdout: str = "") -> list[dict[str,
                 continue
 
             ubsan = _UBSAN_LOCATION.match(line)
-            if ubsan:
+            # A logger name followed by a number is not a source location.
+            # Likewise a source-looking application log is not enough: require
+            # a recognized UBSan diagnostic or an immediately following native
+            # frame. Explicit sanitizer ERROR/SUMMARY headers remain supported.
+            next_line = lines[position + 1] if position + 1 < len(lines) else ""
+            corroborated = _parse_frame(next_line) is not None
+            if ubsan and (
+                (_SOURCE_SUFFIX.search(ubsan.group("file")) and _UBSAN_MESSAGE.match(ubsan.group("message")))
+                or corroborated
+            ):
                 file = ubsan.group("file")
                 location = None
                 if file:

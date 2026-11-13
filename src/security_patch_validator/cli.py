@@ -7,6 +7,7 @@ import json
 import sys
 from pathlib import Path
 
+from security_patch_validator.execution import load_config, run_suite
 from security_patch_validator.patch_analysis.classifier import classify_patch
 from security_patch_validator.patch_analysis.correlation import correlate_execution
 from security_patch_validator.patch_analysis.diff_analyzer import analyze_diff
@@ -48,6 +49,12 @@ def build_parser() -> argparse.ArgumentParser:
     classify_parser.add_argument('--output', help='Optional output JSON file.')
     classify_parser.add_argument('--pretty', action='store_true', help='Indent JSON output.')
 
+    execution_parser = subparsers.add_parser('execute', help='Build and run paired C/C++ tests.')
+    execution_parser.add_argument('--config', required=True, help='Dynamic execution JSON manifest.')
+    execution_parser.add_argument('--artifacts-dir', help='Retain source snapshots, binaries and run files here.')
+    execution_parser.add_argument('--output', help='Optional output JSON file.')
+    execution_parser.add_argument('--pretty', action='store_true', help='Indent JSON output.')
+
     trace_parser = subparsers.add_parser('parse-trace', help='Parse sanitizer output from runner JSON.')
     trace_parser.add_argument('--input', required=True, help='Path to runner result JSON.')
     trace_parser.add_argument('--output', help='Optional output JSON file.')
@@ -69,6 +76,8 @@ def main() -> int:
                 diff_report=analyze_diff(args.repo, args.base, args.patched),
                 source_roots=args.source_root,
             )
+        elif args.command == 'execute':
+            report = run_suite(load_config(args.config), artifacts_dir=args.artifacts_dir)
         elif args.command == 'parse-trace':
             report = parse_execution_result(json.loads(Path(args.input).read_text(encoding='utf-8')))
         elif args.command == 'correlate':
@@ -80,15 +89,26 @@ def main() -> int:
             return 2
     except (VersionComparisonError, OSError, ValueError, TypeError, KeyError) as exc:
         print(f'spv: error: {exc}', file=sys.stderr)
-        return 30 if args.command == 'classify' else 1
+        if args.command != 'execute':
+            return 30 if args.command == 'classify' else 1
+        report = {'schema_version': '1.0', 'analysis_type': 'dynamic_execution',
+                  'status': 'build_or_config_error', 'error': str(exc)}
 
     output = json.dumps(report, ensure_ascii=False, indent=2 if args.pretty else None)
     if args.output:
         output_path = Path(args.output).expanduser()
-        output_path.parent.mkdir(parents=True, exist_ok=True)
-        output_path.write_text(output + '\n', encoding='utf-8')
+        try:
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            output_path.write_text(output + '\n', encoding='utf-8')
+        except OSError as exc:
+            if args.command != 'execute':
+                raise
+            print(f'spv: error: {exc}', file=sys.stderr)
+            return 30
     else:
         print(output)
+    if args.command == 'execute':
+        return {'completed': 0, 'build_or_config_error': 30, 'incomplete': 40}[report['status']]
     return report['suggested_exit_code'] if args.command == 'classify' else 0
 
 

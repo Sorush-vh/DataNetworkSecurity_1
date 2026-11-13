@@ -1,0 +1,52 @@
+{
+  "target_id": "square-fixture",
+  "versions": {
+    "base": {"source_dir": "base"},
+    "patched": {"source_dir": "patched"}
+  },
+  "build": {
+    "binary": "out/square",
+    "commands": [["gcc", "-std=c11", "-Wall", "-Wextra", "{flags}", "square.c", "-o", "{binary}"]]
+  },
+  "limits": {"build_timeout": 20, "timeout": 3, "max_output_bytes": 65536},
+  "tests": [
+    {
+      "id": "argv-valid",
+      "category": "valid",
+      "input": {"mode": "argv"},
+      "args": ["7"],
+      "expected": {"exit_code": 0, "stdout": "49\n", "stderr": ""},
+      "reference": "docs/execution.md#square-fixture-oracle"
+    },
+    {
+      "id": "file-lower-bound",
+      "category": "boundary",
+      "input": {"mode": "file", "text": "0\n", "name": "number.txt"},
+      "args": ["--file", "{input}"],
+      "expected": {"exit_code": 0, "stdout": "0\n", "stderr": ""},
+      "reference": "docs/execution.md#square-fixture-oracle"
+    },
+    {
+      "id": "stdin-upper-bound",
+      "category": "boundary",
+      "input": {"mode": "stdin", "text": "100\n"},
+      "expected": {"exit_code": 0, "stdout": "10000\n", "stderr": ""},
+      "reference": "docs/execution.md#square-fixture-oracle"
+    },
+    {
+      "id": "argv-invalid",
+      "category": "invalid",
+      "input": {"mode": "argv"},
+      "args": ["abc"],
+      "expected": {"exit_code": 2, "stdout": "", "stderr": "invalid number\n"},
+      "reference": "docs/execution.md#square-fixture-oracle"
+    },
+    {
+      "id": "stdin-out-of-range",
+      "category": "invalid",
+      "input": {"mode": "stdin", "text": "101\n"},
+      "expected": {"exit_code": 2, "stdout": "", "stderr": "invalid number\n"},
+      "reference": "docs/execution.md#square-fixture-oracle"
+    }
+  ]
+}

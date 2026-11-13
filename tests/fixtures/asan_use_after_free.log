@@ -1,0 +1,4 @@
+==228==ERROR: AddressSanitizer: heap-use-after-free on address 0x603000000010 at pc 0x400abc bp 0x7fff sp 0x7ffa
+    #0 0x400abc in process /workspace/src/process.cpp:88:9
+    #1 0x400def in main /workspace/src/main.cpp:21:3
+SUMMARY: AddressSanitizer: heap-use-after-free /workspace/src/process.cpp:88:9 in process

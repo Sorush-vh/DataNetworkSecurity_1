@@ -1,0 +1,4 @@
+/project/src/math.cpp:12:17: runtime error: signed integer overflow: 2147483647 + 1 cannot be represented in type 'int'
+    #0 0x5555555551a2 in add_numbers /project/src/math.cpp:12:17
+    #1 0x5555555551df in main /project/src/main.cpp:18:2
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /project/src/math.cpp:12:17 in add_numbers

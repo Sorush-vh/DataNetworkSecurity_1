@@ -141,8 +141,13 @@ def test_asan_deadlysignal_alone_is_reported_without_guessing_root_cause() -> No
     assert findings[0]["location"] is None
 
 
-def test_ubsan_runtime_error_without_location() -> None:
-    finding, = parse_sanitizer_output(stderr="runtime error: division by zero")
+@pytest.mark.parametrize("message", ["input invalid", "division by zero"])
+def test_bare_runtime_error_without_location_is_not_sanitizer_evidence(message: str) -> None:
+    assert parse_sanitizer_output(stderr=f"runtime error: {message}") == []
+
+
+def test_explicit_ubsan_summary_without_location() -> None:
+    finding, = parse_sanitizer_output(stderr="SUMMARY: UndefinedBehaviorSanitizer: division by zero")
     assert finding["detection_mechanism"] == "ubsan"
     assert finding["location"] is None
 
