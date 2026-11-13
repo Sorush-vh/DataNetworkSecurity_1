@@ -1,4 +1,3 @@
-
 import argparse
 import json
 import sys
@@ -42,6 +41,39 @@ def create_report(
     analysis_status,
     details=None
 ):
+    allowed_statuses = {
+        "security_status": {
+            "PASS",
+            "VULN_REMAINS",
+            "INCONCLUSIVE",
+            "BUILD_OR_CONFIG_ERROR"
+        },
+        "functional_status": {
+            "PASS",
+            "FUNC_REGRESSION",
+            "INCONCLUSIVE",
+            "BUILD_OR_CONFIG_ERROR"
+        },
+        "analysis_status": {
+            "PASS",
+            "INCONCLUSIVE",
+            "BUILD_OR_CONFIG_ERROR"
+        }
+    }
+
+    supplied_statuses = {
+        "security_status": security_status,
+        "functional_status": functional_status,
+        "analysis_status": analysis_status
+    }
+
+    for field, value in supplied_statuses.items():
+        if value not in allowed_statuses[field]:
+            raise ValueError(f"Invalid {field}: {value}")
+
+    if details is not None and not isinstance(details, dict):
+        raise ValueError("details must be a dictionary")
+
     overall_status = determine_status(
         security_status,
         functional_status,
@@ -54,8 +86,57 @@ def create_report(
         "security_status": security_status,
         "functional_status": functional_status,
         "analysis_status": analysis_status,
-        "details": details or {}
+        "details": details if details is not None else {}
     }
+
+
+def evaluate_regression_result(result):
+    if not isinstance(result, dict):
+        raise ValueError("Regression result must be a dictionary")
+
+    status = result.get("status")
+
+    if status == "INCONCLUSIVE":
+        return "INCONCLUSIVE", "INCONCLUSIVE"
+
+    if status not in {"PASS", "FAIL"}:
+        raise ValueError(f"Unknown regression status: {status}")
+
+    base = result.get("base")
+    patched = result.get("patched")
+    stability = result.get("stability")
+
+    if not isinstance(base, dict) or not isinstance(patched, dict):
+        return "INCONCLUSIVE", "INCONCLUSIVE"
+
+    if not isinstance(stability, dict):
+        return "INCONCLUSIVE", "INCONCLUSIVE"
+
+    if stability.get("overall") != "STABLE":
+        return "INCONCLUSIVE", "INCONCLUSIVE"
+
+    if base.get("matches_expected_error") is not True:
+        return "INCONCLUSIVE", "INCONCLUSIVE"
+
+    same_error_absent = patched.get("same_error_absent")
+    expected_behavior = patched.get("expected_behavior")
+
+    if not isinstance(same_error_absent, bool):
+        return "INCONCLUSIVE", "INCONCLUSIVE"
+
+    if not isinstance(expected_behavior, bool):
+        return "INCONCLUSIVE", "INCONCLUSIVE"
+
+    if not same_error_absent:
+        return "VULN_REMAINS", "PASS"
+
+    if not expected_behavior:
+        return "PASS", "FUNC_REGRESSION"
+
+    if status == "PASS":
+        return "PASS", "PASS"
+
+    return "INCONCLUSIVE", "INCONCLUSIVE"
 
 
 def save_report(report, output_path):
@@ -84,6 +165,11 @@ def main():
     )
 
     parser.add_argument(
+        "--regression-result",
+        help="Path to regression result JSON file"
+    )
+
+    parser.add_argument(
         "--output",
         default="reports/report.json",
         help="Path to JSON report"
@@ -106,15 +192,37 @@ def main():
     parser.add_argument(
         "--analysis",
         choices=["PASS", "INCONCLUSIVE", "BUILD_OR_CONFIG_ERROR"],
-        default="PASS"
+        default="INCONCLUSIVE"
     )
 
     args = parser.parse_args()
+    details = {}
+
+    if args.regression_result:
+        try:
+            with open(args.regression_result, encoding="utf-8") as file:
+                regression_result = json.load(file)
+
+            security_status, functional_status = (
+                evaluate_regression_result(regression_result)
+            )
+            details["regression"] = regression_result
+
+        except (OSError, json.JSONDecodeError, ValueError) as error:
+            print(
+                f"Error reading regression result: {error}",
+                file=sys.stderr
+            )
+            return EXIT_CODES["BUILD_OR_CONFIG_ERROR"]
+    else:
+        security_status = args.security
+        functional_status = args.functional
 
     report = create_report(
-        security_status=args.security,
-        functional_status=args.functional,
-        analysis_status=args.analysis
+        security_status=security_status,
+        functional_status=functional_status,
+        analysis_status=args.analysis,
+        details=details
     )
 
     save_report(report, args.output)

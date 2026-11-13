@@ -1,4 +1,6 @@
+
 import os
+import re
 import signal
 import subprocess
 
@@ -18,19 +20,43 @@ def detect_error_type(stderr, returncode, timed_out):
     if "segmentation fault" in error_output:
         return "SEGMENTATION_FAULT"
 
-    if returncode < 0:
+    if returncode is not None and returncode < 0:
         try:
             return signal.Signals(-returncode).name
         except ValueError:
             return "UNKNOWN_SIGNAL"
 
-    if returncode != 0:
+    if returncode is not None and returncode != 0:
         return f"EXIT_CODE_{returncode}"
 
     return None
 
 
-def execute_once(command, input_data=None, timeout=5, environment=None, cwd=None):
+def normalize_diagnostic(stderr):
+    """
+    Normalize volatile values such as memory addresses and process IDs
+    before comparing diagnostics from repeated executions.
+    """
+    normalized = stderr.lower()
+
+    normalized = re.sub(
+        r"0x[0-9a-f]+",
+        "<address>",
+        normalized
+    )
+
+    normalized = re.sub(
+        r"\bpid[=: ]+\d+\b",
+        "pid=<number>",
+        normalized
+    )
+
+    return normalized.strip()
+
+
+def execute_once(command, input_data=None, timeout=5,
+                 environment=None, cwd=None):
+
     env = os.environ.copy()
 
     if environment:
@@ -52,14 +78,19 @@ def execute_once(command, input_data=None, timeout=5, environment=None, cwd=None
 
         returncode = result.returncode
 
-        return {
-            "command": command,
-            "returncode": returncode,
-            "signal": (
+        try:
+            process_signal = (
                 signal.Signals(-returncode).name
                 if returncode < 0
                 else None
-            ),
+            )
+        except ValueError:
+            process_signal = "UNKNOWN_SIGNAL"
+
+        return {
+            "command": command,
+            "returncode": returncode,
+            "signal": process_signal,
             "stdout": stdout,
             "stderr": stderr,
             "timed_out": False,
@@ -88,6 +119,33 @@ def execute_once(command, input_data=None, timeout=5, environment=None, cwd=None
             "error_type": "TIMEOUT"
         }
 
+    except OSError as error:
+        return {
+            "command": command,
+            "returncode": None,
+            "signal": None,
+            "stdout": "",
+            "stderr": str(error),
+            "timed_out": False,
+            "error_type": "EXECUTION_ERROR"
+        }
+
+
+
+def _result_signature(result):
+    """
+    Build a signature from the execution outcome and normalized
+    standard output and diagnostic output.
+    """
+    return (
+        result["error_type"],
+        result["returncode"],
+        result["signal"],
+        result["timed_out"],
+        normalize_diagnostic(result["stdout"]),
+        normalize_diagnostic(result["stderr"])
+    )
+
 
 def replay(command, repetitions=3, input_data=None,
            timeout=5, environment=None, cwd=None):
@@ -105,15 +163,11 @@ def replay(command, repetitions=3, input_data=None,
             environment=environment,
             cwd=cwd
         )
+
         results.append(result)
 
     signatures = [
-        (
-            result["error_type"],
-            result["returncode"],
-            result["signal"],
-            result["timed_out"]
-        )
+        _result_signature(result)
         for result in results
     ]
 

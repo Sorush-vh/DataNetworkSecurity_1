@@ -2,6 +2,7 @@
 import json
 import tempfile
 import unittest
+from modules.cli.cli import evaluate_regression_result
 from pathlib import Path
 
 from modules.cli.cli import (
@@ -63,6 +64,94 @@ class TestCLI(unittest.TestCase):
 
             self.assertEqual(loaded["status"], "PASS")
             self.assertEqual(loaded["exit_code"], EXIT_CODES["PASS"])
+    def test_rejects_invalid_status(self):
+        with self.assertRaises(ValueError):
+            create_report(
+                "UNKNOWN",
+                "PASS",
+                "PASS"
+            )
+
+    def test_rejects_non_dictionary_details(self):
+        with self.assertRaises(ValueError):
+            create_report(
+                "PASS",
+                "PASS",
+                "PASS",
+                details="invalid"
+            )
+
+
+
+    def test_regression_pass_result(self):
+        result = {
+            "status": "PASS",
+            "stability": {
+                "overall": "STABLE"
+            },
+            "base": {
+                "matches_expected_error": True
+            },
+            "patched": {
+                "same_error_absent": True,
+                "expected_behavior": True
+            }
+        }
+
+        security, functional = evaluate_regression_result(result)
+
+        self.assertEqual(security, "PASS")
+        self.assertEqual(functional, "PASS")
+
+    def test_regression_flaky_result(self):
+        result = {
+            "status": "INCONCLUSIVE",
+            "stability": {
+                "overall": "FLAKY"
+            }
+        }
+
+        security, functional = evaluate_regression_result(result)
+
+        self.assertEqual(security, "INCONCLUSIVE")
+        self.assertEqual(functional, "INCONCLUSIVE")
+
+
+    def test_regression_vulnerability_remains(self):
+        result = {
+            "status": "FAIL",
+            "stability": {
+                "overall": "STABLE"
+            },
+            "base": {"matches_expected_error": True},
+            "patched": {
+                "same_error_absent": False,
+                "expected_behavior": False
+            }
+        }
+
+        security, functional = evaluate_regression_result(result)
+
+        self.assertEqual(security, "VULN_REMAINS")
+        self.assertEqual(functional, "PASS")
+
+    def test_regression_functional_failure(self):
+        result = {
+            "status": "FAIL",
+            "stability": {
+                "overall": "STABLE"
+            },
+            "base": {"matches_expected_error": True},
+            "patched": {
+                "same_error_absent": True,
+                "expected_behavior": False
+            }
+        }
+
+        security, functional = evaluate_regression_result(result)
+
+        self.assertEqual(security, "PASS")
+        self.assertEqual(functional, "FUNC_REGRESSION")
 
 
 if __name__ == "__main__":
