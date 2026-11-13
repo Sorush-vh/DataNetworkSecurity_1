@@ -1,0 +1,7 @@
+=================================================================
+==341==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000000024 at pc 0x400abc bp 0x7ffeed sp 0x7ffeef
+READ of size 1 at 0x602000000024 thread T0
+    #0 0x400abc in parse_input /project/src/parser.c:45:7
+    #1 0x400def in main /project/src/main.c:19:3
+SUMMARY: AddressSanitizer: heap-buffer-overflow /project/src/parser.c:45:7 in parse_input
+==341==ABORTING
