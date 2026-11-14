@@ -1,0 +1,56 @@
+{
+    "tests": [
+        {
+            "name": "bzip2-SEC-ORIGINAL",
+            "input_file": "bzip2-SEC-ORIGINAL.input",
+            "sha256": "38a478013fda44633065117cf14fa8bb8b8872048f6db9bd3973acca38811aec",
+            "error_type": "out-of-bounds",
+            "expected_on_base": true,
+            "expected_on_patched": false,
+            "created_at": "2026-11-14T09:46:40.332939+00:00",
+            "target_id": "bzip2",
+            "test_id": "SEC-ORIGINAL",
+            "mode": "file",
+            "args": [
+                "-dc",
+                "{input}"
+            ],
+            "input_name": "selector-overflow.bz2",
+            "expected_patched": {
+                "exit_code": 2,
+                "stdout": ""
+            },
+            "signature": {
+                "error_type": "out-of-bounds",
+                "file": "decompress.c",
+                "function": "BZ2_decompress"
+            }
+        },
+        {
+            "name": "bzip2-SEC-ALTERNATE",
+            "input_file": "bzip2-SEC-ALTERNATE.input",
+            "sha256": "38a478013fda44633065117cf14fa8bb8b8872048f6db9bd3973acca38811aec",
+            "error_type": "out-of-bounds",
+            "expected_on_base": true,
+            "expected_on_patched": false,
+            "created_at": "2026-11-14T09:46:40.333726+00:00",
+            "target_id": "bzip2",
+            "test_id": "SEC-ALTERNATE",
+            "mode": "file",
+            "args": [
+                "-dc",
+                "{input}"
+            ],
+            "input_name": "selector-overflow-alt.bz2",
+            "expected_patched": {
+                "exit_code": 2,
+                "stdout": ""
+            },
+            "signature": {
+                "error_type": "out-of-bounds",
+                "file": "decompress.c",
+                "function": "BZ2_decompress"
+            }
+        }
+    ]
+}
