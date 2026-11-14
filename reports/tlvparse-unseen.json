@@ -1,0 +1,919 @@
+{
+  "schema_version": "1.0",
+  "analysis_type": "target_scenario_evaluation",
+  "target_id": "tlvparse",
+  "target_name": "tlvparse",
+  "scenario": "correct",
+  "patched_version": "correct",
+  "patched_source_overridden": true,
+  "expected_exit_code": null,
+  "expected_statuses": [
+    "FIXED"
+  ],
+  "observed_exit_code": 40,
+  "matches_expected_exit_code": null,
+  "classification": {
+    "schema_version": "1.0",
+    "analysis_type": "patch_classification",
+    "target_id": "tlvparse",
+    "target_issue_id": "TLV-001",
+    "statuses": [
+      "INCOMPLETE_FIX",
+      "INCONCLUSIVE"
+    ],
+    "security_status": "INCOMPLETE_FIX",
+    "functional_status": "PASS",
+    "new_issues": [],
+    "tests": [
+      {
+        "test_id": "FUN-VALID",
+        "kind": "functional",
+        "build_type": "release",
+        "replays": {
+          "base": 3,
+          "patched": 3
+        },
+        "sufficient_replays": true,
+        "findings": [],
+        "status": "PASS",
+        "base_matches_reference": true,
+        "patched_matches_reference": true
+      },
+      {
+        "test_id": "FUN-BOUNDARY",
+        "kind": "functional",
+        "build_type": "release",
+        "replays": {
+          "base": 3,
+          "patched": 3
+        },
+        "sufficient_replays": true,
+        "findings": [],
+        "status": "PASS",
+        "base_matches_reference": true,
+        "patched_matches_reference": true
+      },
+      {
+        "test_id": "SEC-ORIGINAL",
+        "kind": "security",
+        "build_type": "asan_ubsan",
+        "replays": {
+          "base": 3,
+          "patched": 3
+        },
+        "sufficient_replays": true,
+        "findings": [
+          {
+            "version": "base",
+            "replay": 1,
+            "diagnostics": [
+              {
+                "error_type": "stack-buffer-overflow",
+                "detection_mechanism": "asan",
+                "matches_target": true,
+                "location": {
+                  "file": "../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc",
+                  "line": 827,
+                  "column": null
+                }
+              }
+            ]
+          },
+          {
+            "version": "base",
+            "replay": 2,
+            "diagnostics": [
+              {
+                "error_type": "stack-buffer-overflow",
+                "detection_mechanism": "asan",
+                "matches_target": true,
+                "location": {
+                  "file": "../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc",
+                  "line": 827,
+                  "column": null
+                }
+              }
+            ]
+          },
+          {
+            "version": "base",
+            "replay": 3,
+            "diagnostics": [
+              {
+                "error_type": "stack-buffer-overflow",
+                "detection_mechanism": "asan",
+                "matches_target": true,
+                "location": {
+                  "file": "../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc",
+                  "line": 827,
+                  "column": null
+                }
+              }
+            ]
+          }
+        ],
+        "correlations": {
+          "base": {
+            "summary": {
+              "findings": 1,
+              "changed_line_overlaps": 0,
+              "file_only_overlaps": 1,
+              "unresolved": 0
+            },
+            "findings": [
+              {
+                "finding_index": 0,
+                "detection_mechanism": "asan",
+                "error_type": "stack-buffer-overflow",
+                "correlation_status": "file_overlap_only",
+                "evidence_strength": "weak",
+                "matches": [
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/base/asan_ubsan/source/tlvparse.c",
+                    "repository_path": "tlvparse.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 39,
+                    "source": "primary_stack_frame",
+                    "frame_index": 1,
+                    "function": "parse_message",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  },
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/base/asan_ubsan/source/tlvparse.c",
+                    "repository_path": "tlvparse.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 61,
+                    "source": "primary_stack_frame",
+                    "frame_index": 0,
+                    "function": "main",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  },
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/base/asan_ubsan/source/tlvparse.c",
+                    "repository_path": "tlvparse.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 77,
+                    "source": "primary_stack_frame",
+                    "frame_index": 2,
+                    "function": "main",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  }
+                ],
+                "path_warnings": [],
+                "related_stacks_excluded": true
+              }
+            ]
+          }
+        },
+        "role": "original",
+        "base_target_reproduced": true,
+        "patched_target_reproduced": false,
+        "patched_expected_behavior": true,
+        "stable_target_observation": true
+      },
+      {
+        "test_id": "SEC-ALTERNATE",
+        "kind": "security",
+        "build_type": "asan_ubsan",
+        "replays": {
+          "base": 3,
+          "patched": 3
+        },
+        "sufficient_replays": true,
+        "findings": [
+          {
+            "version": "base",
+            "replay": 1,
+            "diagnostics": [
+              {
+                "error_type": "stack-buffer-overflow",
+                "detection_mechanism": "asan",
+                "matches_target": true,
+                "location": {
+                  "file": "../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc",
+                  "line": 827,
+                  "column": null
+                }
+              }
+            ]
+          },
+          {
+            "version": "base",
+            "replay": 2,
+            "diagnostics": [
+              {
+                "error_type": "stack-buffer-overflow",
+                "detection_mechanism": "asan",
+                "matches_target": true,
+                "location": {
+                  "file": "../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc",
+                  "line": 827,
+                  "column": null
+                }
+              }
+            ]
+          },
+          {
+            "version": "base",
+            "replay": 3,
+            "diagnostics": [
+              {
+                "error_type": "stack-buffer-overflow",
+                "detection_mechanism": "asan",
+                "matches_target": true,
+                "location": {
+                  "file": "../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc",
+                  "line": 827,
+                  "column": null
+                }
+              }
+            ]
+          },
+          {
+            "version": "patched",
+            "replay": 1,
+            "diagnostics": [
+              {
+                "error_type": "stack-buffer-overflow",
+                "detection_mechanism": "asan",
+                "matches_target": true,
+                "location": {
+                  "file": "../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc",
+                  "line": 827,
+                  "column": null
+                }
+              }
+            ]
+          },
+          {
+            "version": "patched",
+            "replay": 2,
+            "diagnostics": [
+              {
+                "error_type": "stack-buffer-overflow",
+                "detection_mechanism": "asan",
+                "matches_target": true,
+                "location": {
+                  "file": "../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc",
+                  "line": 827,
+                  "column": null
+                }
+              }
+            ]
+          },
+          {
+            "version": "patched",
+            "replay": 3,
+            "diagnostics": [
+              {
+                "error_type": "stack-buffer-overflow",
+                "detection_mechanism": "asan",
+                "matches_target": true,
+                "location": {
+                  "file": "../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc",
+                  "line": 827,
+                  "column": null
+                }
+              }
+            ]
+          }
+        ],
+        "correlations": {
+          "base": {
+            "summary": {
+              "findings": 1,
+              "changed_line_overlaps": 0,
+              "file_only_overlaps": 1,
+              "unresolved": 0
+            },
+            "findings": [
+              {
+                "finding_index": 0,
+                "detection_mechanism": "asan",
+                "error_type": "stack-buffer-overflow",
+                "correlation_status": "file_overlap_only",
+                "evidence_strength": "weak",
+                "matches": [
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/base/asan_ubsan/source/tlvparse.c",
+                    "repository_path": "tlvparse.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 39,
+                    "source": "primary_stack_frame",
+                    "frame_index": 1,
+                    "function": "parse_message",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  },
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/base/asan_ubsan/source/tlvparse.c",
+                    "repository_path": "tlvparse.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 61,
+                    "source": "primary_stack_frame",
+                    "frame_index": 0,
+                    "function": "main",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  },
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/base/asan_ubsan/source/tlvparse.c",
+                    "repository_path": "tlvparse.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 77,
+                    "source": "primary_stack_frame",
+                    "frame_index": 2,
+                    "function": "main",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  }
+                ],
+                "path_warnings": [],
+                "related_stacks_excluded": true
+              }
+            ]
+          },
+          "patched": {
+            "summary": {
+              "findings": 1,
+              "changed_line_overlaps": 0,
+              "file_only_overlaps": 1,
+              "unresolved": 0
+            },
+            "findings": [
+              {
+                "finding_index": 0,
+                "detection_mechanism": "asan",
+                "error_type": "stack-buffer-overflow",
+                "correlation_status": "file_overlap_only",
+                "evidence_strength": "weak",
+                "matches": [
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/patched/asan_ubsan/source/tlvparse.c",
+                    "repository_path": "tlvparse.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 43,
+                    "source": "primary_stack_frame",
+                    "frame_index": 1,
+                    "function": "parse_message",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  },
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/patched/asan_ubsan/source/tlvparse.c",
+                    "repository_path": "tlvparse.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 65,
+                    "source": "primary_stack_frame",
+                    "frame_index": 0,
+                    "function": "main",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  },
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/patched/asan_ubsan/source/tlvparse.c",
+                    "repository_path": "tlvparse.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 81,
+                    "source": "primary_stack_frame",
+                    "frame_index": 2,
+                    "function": "main",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  }
+                ],
+                "path_warnings": [],
+                "related_stacks_excluded": true
+              }
+            ]
+          }
+        },
+        "role": "alternate",
+        "base_target_reproduced": true,
+        "patched_target_reproduced": true,
+        "patched_expected_behavior": false,
+        "stable_target_observation": true
+      }
+    ],
+    "complete": false,
+    "inconclusive_reasons": [
+      "Required independent check 'reproducer' has no verified completion evidence."
+    ],
+    "suggested_exit_code": 40,
+    "exit_code_policy": "40 > 20 > 10 > 30 > 0; tool configuration errors are handled by CLI/integration layer.",
+    "limitations": [
+      "FIXED means not observed in the configured tests; it does not prove the absence of all vulnerabilities.",
+      "Newly observed sanitizer findings are not automatically caused by the patch.",
+      "The target issue signature and independent functional oracles must be approved outside the classifier.",
+      "Completion attestations are supplied by other modules and are not independently verified here."
+    ]
+  },
+  "hardening": {
+    "schema_version": "1.0",
+    "analysis_type": "target_hardening",
+    "reports": {
+      "base": {
+        "schema_version": "1.0",
+        "analysis_type": "elf_hardening",
+        "binary": "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/base/release/source/tlvparse",
+        "binary_sha256": "305a600392797ab0d474c1d11e81cd1906ff0202fcbf78f4136826137d46f4db",
+        "elf": {
+          "class": "ELF64",
+          "data": "2's complement, little endian",
+          "type": "DYN (Position-Independent Executable file)",
+          "machine": "Advanced Micro Devices X86-64"
+        },
+        "protections": {
+          "relro": {
+            "status": "full",
+            "reason": "GNU_RELRO is present and the dynamic section requests immediate binding (BIND_NOW/NOW).",
+            "evidence": {
+              "gnu_relro_segment": true,
+              "bind_now": true,
+              "dynamic_flags": [
+                "BIND_NOW",
+                "NOW",
+                "PIE"
+              ]
+            }
+          },
+          "pie": {
+            "status": "enabled",
+            "reason": "The ELF is ET_DYN and contains an interpreter, which is the PIE executable layout.",
+            "evidence": {
+              "elf_type": "DYN (Position-Independent Executable file)",
+              "has_interp": true,
+              "pie_dynamic_flag": true
+            }
+          },
+          "nx": {
+            "status": "enabled",
+            "reason": "The GNU_STACK segment is not marked executable.",
+            "evidence": {
+              "gnu_stack_flags": "RW"
+            }
+          },
+          "stack_canary": {
+            "status": "present",
+            "reason": "The binary references the stack-protector runtime symbol.",
+            "evidence": {
+              "symbols": [
+                "__stack_chk_fail"
+              ],
+              "canary_instruction_count": 2
+            }
+          }
+        },
+        "evidence": {
+          "commands": [
+            [
+              "readelf",
+              "-hW",
+              "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/base/release/source/tlvparse"
+            ],
+            [
+              "readelf",
+              "-lW",
+              "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/base/release/source/tlvparse"
+            ],
+            [
+              "readelf",
+              "-dW",
+              "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/base/release/source/tlvparse"
+            ],
+            [
+              "readelf",
+              "-sW",
+              "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/base/release/source/tlvparse"
+            ],
+            [
+              "objdump",
+              "-d",
+              "--no-show-raw-insn",
+              "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/base/release/source/tlvparse"
+            ]
+          ],
+          "program_headers": {
+            "has_gnu_relro": true,
+            "has_interp": true,
+            "gnu_stack_flags": "RW",
+            "load_segments": 4
+          },
+          "dynamic": {
+            "bind_now": true,
+            "pie_flag": true,
+            "flags": [
+              "BIND_NOW",
+              "NOW",
+              "PIE"
+            ]
+          },
+          "symbols": {
+            "stack_canary_symbols": [
+              "__stack_chk_fail"
+            ],
+            "has_stack_canary_symbol": true
+          },
+          "disassembly": {
+            "canary_instruction_count": 2,
+            "has_canary_instruction": true
+          }
+        },
+        "limitations": [
+          "PIE does not prove that ASLR is enabled in the runtime environment.",
+          "A stack-canary symbol or instruction does not prove that every function is protected.",
+          "RELRO classification is based on the GNU_RELRO segment and immediate-binding flags.",
+          "The inspection describes the binary, not the compiler flags that produced it."
+        ]
+      },
+      "patched": {
+        "schema_version": "1.0",
+        "analysis_type": "elf_hardening",
+        "binary": "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/patched/release/source/tlvparse",
+        "binary_sha256": "db57791d8e3e287e9632c7b53b99eb9f784047dbc76ca7345b5eb29918b4b29d",
+        "elf": {
+          "class": "ELF64",
+          "data": "2's complement, little endian",
+          "type": "DYN (Position-Independent Executable file)",
+          "machine": "Advanced Micro Devices X86-64"
+        },
+        "protections": {
+          "relro": {
+            "status": "full",
+            "reason": "GNU_RELRO is present and the dynamic section requests immediate binding (BIND_NOW/NOW).",
+            "evidence": {
+              "gnu_relro_segment": true,
+              "bind_now": true,
+              "dynamic_flags": [
+                "BIND_NOW",
+                "NOW",
+                "PIE"
+              ]
+            }
+          },
+          "pie": {
+            "status": "enabled",
+            "reason": "The ELF is ET_DYN and contains an interpreter, which is the PIE executable layout.",
+            "evidence": {
+              "elf_type": "DYN (Position-Independent Executable file)",
+              "has_interp": true,
+              "pie_dynamic_flag": true
+            }
+          },
+          "nx": {
+            "status": "enabled",
+            "reason": "The GNU_STACK segment is not marked executable.",
+            "evidence": {
+              "gnu_stack_flags": "RW"
+            }
+          },
+          "stack_canary": {
+            "status": "present",
+            "reason": "The binary references the stack-protector runtime symbol.",
+            "evidence": {
+              "symbols": [
+                "__stack_chk_fail"
+              ],
+              "canary_instruction_count": 2
+            }
+          }
+        },
+        "evidence": {
+          "commands": [
+            [
+              "readelf",
+              "-hW",
+              "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/patched/release/source/tlvparse"
+            ],
+            [
+              "readelf",
+              "-lW",
+              "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/patched/release/source/tlvparse"
+            ],
+            [
+              "readelf",
+              "-dW",
+              "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/patched/release/source/tlvparse"
+            ],
+            [
+              "readelf",
+              "-sW",
+              "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/patched/release/source/tlvparse"
+            ],
+            [
+              "objdump",
+              "-d",
+              "--no-show-raw-insn",
+              "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution/spv-execution-aq2cr9s_/builds/patched/release/source/tlvparse"
+            ]
+          ],
+          "program_headers": {
+            "has_gnu_relro": true,
+            "has_interp": true,
+            "gnu_stack_flags": "RW",
+            "load_segments": 4
+          },
+          "dynamic": {
+            "bind_now": true,
+            "pie_flag": true,
+            "flags": [
+              "BIND_NOW",
+              "NOW",
+              "PIE"
+            ]
+          },
+          "symbols": {
+            "stack_canary_symbols": [
+              "__stack_chk_fail"
+            ],
+            "has_stack_canary_symbol": true
+          },
+          "disassembly": {
+            "canary_instruction_count": 2,
+            "has_canary_instruction": true
+          }
+        },
+        "limitations": [
+          "PIE does not prove that ASLR is enabled in the runtime environment.",
+          "A stack-canary symbol or instruction does not prove that every function is protected.",
+          "RELRO classification is based on the GNU_RELRO segment and immediate-binding flags.",
+          "The inspection describes the binary, not the compiler flags that produced it."
+        ]
+      }
+    },
+    "errors": [],
+    "comparison": {
+      "schema_version": "1.0",
+      "analysis_type": "elf_hardening_comparison",
+      "base_binary_sha256": "305a600392797ab0d474c1d11e81cd1906ff0202fcbf78f4136826137d46f4db",
+      "patched_binary_sha256": "db57791d8e3e287e9632c7b53b99eb9f784047dbc76ca7345b5eb29918b4b29d",
+      "changes": [],
+      "warnings": [],
+      "unexpected_changes": []
+    },
+    "requirements": {
+      "base": {
+        "compliant": true,
+        "results": [
+          {
+            "protection": "relro",
+            "expected": "full",
+            "observed": "full",
+            "compliant": true,
+            "reason": "GNU_RELRO is present and the dynamic section requests immediate binding (BIND_NOW/NOW)."
+          },
+          {
+            "protection": "pie",
+            "expected": "enabled",
+            "observed": "enabled",
+            "compliant": true,
+            "reason": "The ELF is ET_DYN and contains an interpreter, which is the PIE executable layout."
+          },
+          {
+            "protection": "nx",
+            "expected": "enabled",
+            "observed": "enabled",
+            "compliant": true,
+            "reason": "The GNU_STACK segment is not marked executable."
+          },
+          {
+            "protection": "stack_canary",
+            "expected": "present",
+            "observed": "present",
+            "compliant": true,
+            "reason": "The binary references the stack-protector runtime symbol."
+          }
+        ]
+      },
+      "patched": {
+        "compliant": true,
+        "results": [
+          {
+            "protection": "relro",
+            "expected": "full",
+            "observed": "full",
+            "compliant": true,
+            "reason": "GNU_RELRO is present and the dynamic section requests immediate binding (BIND_NOW/NOW)."
+          },
+          {
+            "protection": "pie",
+            "expected": "enabled",
+            "observed": "enabled",
+            "compliant": true,
+            "reason": "The ELF is ET_DYN and contains an interpreter, which is the PIE executable layout."
+          },
+          {
+            "protection": "nx",
+            "expected": "enabled",
+            "observed": "enabled",
+            "compliant": true,
+            "reason": "The GNU_STACK segment is not marked executable."
+          },
+          {
+            "protection": "stack_canary",
+            "expected": "present",
+            "observed": "present",
+            "compliant": true,
+            "reason": "The binary references the stack-protector runtime symbol."
+          }
+        ]
+      }
+    }
+  },
+  "reference_verification": {
+    "schema_version": "1.0",
+    "analysis_type": "reference_oracle_verification",
+    "checks": [
+      {
+        "test_id": "FUN-VALID",
+        "version": "base",
+        "version_label": "base",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "FUN-VALID",
+        "version": "patched",
+        "version_label": "correct",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "FUN-BOUNDARY",
+        "version": "base",
+        "version_label": "base",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "FUN-BOUNDARY",
+        "version": "patched",
+        "version_label": "correct",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "INV-TRUNCATED",
+        "version": "base",
+        "version_label": "base",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "INV-TRUNCATED",
+        "version": "patched",
+        "version_label": "correct",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "INV-TYPE",
+        "version": "base",
+        "version_label": "base",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "INV-TYPE",
+        "version": "patched",
+        "version_label": "correct",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "SEC-ORIGINAL",
+        "version": "base",
+        "version_label": "base",
+        "expected": "vulnerable",
+        "observed": "vulnerable",
+        "matches": true
+      },
+      {
+        "test_id": "SEC-ORIGINAL",
+        "version": "patched",
+        "version_label": "correct",
+        "expected": "fixed",
+        "observed": "fixed",
+        "matches": true
+      },
+      {
+        "test_id": "SEC-ALTERNATE",
+        "version": "base",
+        "version_label": "base",
+        "expected": "vulnerable",
+        "observed": "vulnerable",
+        "matches": true
+      },
+      {
+        "test_id": "SEC-ALTERNATE",
+        "version": "patched",
+        "version_label": "correct",
+        "expected": "fixed",
+        "observed": "vulnerable",
+        "matches": false
+      }
+    ],
+    "mismatches": [
+      {
+        "test_id": "SEC-ALTERNATE",
+        "version": "patched",
+        "version_label": "correct",
+        "expected": "fixed",
+        "observed": "vulnerable",
+        "matches": false
+      }
+    ],
+    "verified_versions": [
+      "base",
+      "correct"
+    ]
+  },
+  "reproducers": {},
+  "diff_summary": {
+    "files_analyzed": 1,
+    "files_with_text_changes": 1,
+    "binary_files": 0,
+    "mode_changed_files": 0,
+    "hunks": 1,
+    "added_lines": 4,
+    "removed_lines": 0
+  },
+  "execution_summary": {
+    "status": "completed",
+    "builds": [
+      {
+        "version": "base",
+        "build_type": "release",
+        "status": "built",
+        "binary_sha256": "305a600392797ab0d474c1d11e81cd1906ff0202fcbf78f4136826137d46f4db",
+        "error": null
+      },
+      {
+        "version": "patched",
+        "build_type": "release",
+        "status": "built",
+        "binary_sha256": "db57791d8e3e287e9632c7b53b99eb9f784047dbc76ca7345b5eb29918b4b29d",
+        "error": null
+      },
+      {
+        "version": "base",
+        "build_type": "asan_ubsan",
+        "status": "built",
+        "binary_sha256": "94ec1caacdd9bce5a62acbfc4d0fd1b370c04a99a8f6fa7aa1fa3e5a4ed300d3",
+        "error": null
+      },
+      {
+        "version": "patched",
+        "build_type": "asan_ubsan",
+        "status": "built",
+        "binary_sha256": "8e07d90f9077b568af8fad70a7174f4cf3a3ad3f562ae56ae6ae924b1fa77d42",
+        "error": null
+      }
+    ],
+    "executions": 72,
+    "skipped": 0
+  },
+  "artifacts": {
+    "workspace": "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa",
+    "execution": "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/execution.json",
+    "hardening": "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/hardening.json",
+    "diff": "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/diff.json",
+    "classification": "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/classification.json",
+    "classifier_suite": "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/classifier-suite.json",
+    "reference_verification": "/project/artifacts/tlvparse-unseen/spv-tlvparse-correct-i6rzjsaa/reference-verification.json"
+  },
+  "limitations": [
+    "A FIXED result means the target issue was not observed in the configured tests; it does not prove global safety.",
+    "Hardening warnings describe the built binaries and do not by themselves prove exploitability.",
+    "The reference oracle is independent of the patched program's output, but it is limited to the configured tests."
+  ]
+}

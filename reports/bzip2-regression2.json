@@ -1,0 +1,1016 @@
+{
+  "schema_version": "1.0",
+  "analysis_type": "target_scenario_evaluation",
+  "target_id": "bzip2",
+  "target_name": "bzip2 1.0.6",
+  "scenario": "regression",
+  "patched_version": "regression",
+  "patched_source_overridden": false,
+  "expected_exit_code": 20,
+  "expected_statuses": [
+    "FUNCTIONAL_REGRESSION"
+  ],
+  "observed_exit_code": 20,
+  "matches_expected_exit_code": true,
+  "classification": {
+    "schema_version": "1.0",
+    "analysis_type": "patch_classification",
+    "target_id": "bzip2",
+    "target_issue_id": "CVE-2019-12900",
+    "statuses": [
+      "FIXED",
+      "FUNCTIONAL_REGRESSION"
+    ],
+    "security_status": "FIXED",
+    "functional_status": "FUNCTIONAL_REGRESSION",
+    "new_issues": [],
+    "tests": [
+      {
+        "test_id": "FUN-VALID-9",
+        "kind": "functional",
+        "build_type": "release",
+        "replays": {
+          "base": 3,
+          "patched": 3
+        },
+        "sufficient_replays": true,
+        "findings": [],
+        "status": "FUNCTIONAL_REGRESSION",
+        "base_matches_reference": true,
+        "patched_matches_reference": false
+      },
+      {
+        "test_id": "FUN-VALID-1",
+        "kind": "functional",
+        "build_type": "release",
+        "replays": {
+          "base": 3,
+          "patched": 3
+        },
+        "sufficient_replays": true,
+        "findings": [],
+        "status": "PASS",
+        "base_matches_reference": true,
+        "patched_matches_reference": true
+      },
+      {
+        "test_id": "SEC-ORIGINAL",
+        "kind": "security",
+        "build_type": "asan_ubsan",
+        "replays": {
+          "base": 3,
+          "patched": 3
+        },
+        "sufficient_replays": true,
+        "findings": [
+          {
+            "version": "base",
+            "replay": 1,
+            "diagnostics": [
+              {
+                "error_type": "out-of-bounds",
+                "detection_mechanism": "ubsan",
+                "matches_target": true,
+                "location": {
+                  "file": "decompress.c",
+                  "line": 299,
+                  "column": 24
+                }
+              }
+            ]
+          },
+          {
+            "version": "base",
+            "replay": 2,
+            "diagnostics": [
+              {
+                "error_type": "out-of-bounds",
+                "detection_mechanism": "ubsan",
+                "matches_target": true,
+                "location": {
+                  "file": "decompress.c",
+                  "line": 299,
+                  "column": 24
+                }
+              }
+            ]
+          },
+          {
+            "version": "base",
+            "replay": 3,
+            "diagnostics": [
+              {
+                "error_type": "out-of-bounds",
+                "detection_mechanism": "ubsan",
+                "matches_target": true,
+                "location": {
+                  "file": "decompress.c",
+                  "line": 299,
+                  "column": 24
+                }
+              }
+            ]
+          }
+        ],
+        "correlations": {
+          "base": {
+            "summary": {
+              "findings": 1,
+              "changed_line_overlaps": 1,
+              "file_only_overlaps": 0,
+              "unresolved": 0
+            },
+            "findings": [
+              {
+                "finding_index": 0,
+                "detection_mechanism": "ubsan",
+                "error_type": "out-of-bounds",
+                "correlation_status": "changed_line_overlap",
+                "evidence_strength": "strong",
+                "matches": [
+                  {
+                    "relation": "changed_line_overlap",
+                    "strength": "strong",
+                    "reported_path": "decompress.c",
+                    "repository_path": "decompress.c",
+                    "path_match_method": "exact_relative",
+                    "reported_line": 299,
+                    "source": "primary_location",
+                    "frame_index": null,
+                    "function": null,
+                    "diff_hunk_indices": [
+                      1
+                    ],
+                    "reason": "Reported location overlaps a changed line on the correct side of the diff."
+                  },
+                  {
+                    "relation": "changed_line_overlap",
+                    "strength": "medium",
+                    "reported_path": "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/decompress.c",
+                    "repository_path": "decompress.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 299,
+                    "source": "primary_stack_frame",
+                    "frame_index": 0,
+                    "function": "BZ2_decompress",
+                    "diff_hunk_indices": [
+                      1
+                    ],
+                    "reason": "Reported location overlaps a changed line on the correct side of the diff."
+                  }
+                ],
+                "path_warnings": [],
+                "related_stacks_excluded": true
+              }
+            ]
+          }
+        },
+        "role": "original",
+        "base_target_reproduced": true,
+        "patched_target_reproduced": false,
+        "patched_expected_behavior": true,
+        "stable_target_observation": true
+      },
+      {
+        "test_id": "SEC-ALTERNATE",
+        "kind": "security",
+        "build_type": "asan_ubsan",
+        "replays": {
+          "base": 3,
+          "patched": 3
+        },
+        "sufficient_replays": true,
+        "findings": [
+          {
+            "version": "base",
+            "replay": 1,
+            "diagnostics": [
+              {
+                "error_type": "out-of-bounds",
+                "detection_mechanism": "ubsan",
+                "matches_target": true,
+                "location": {
+                  "file": "decompress.c",
+                  "line": 299,
+                  "column": 24
+                }
+              }
+            ]
+          },
+          {
+            "version": "base",
+            "replay": 2,
+            "diagnostics": [
+              {
+                "error_type": "out-of-bounds",
+                "detection_mechanism": "ubsan",
+                "matches_target": true,
+                "location": {
+                  "file": "decompress.c",
+                  "line": 299,
+                  "column": 24
+                }
+              }
+            ]
+          },
+          {
+            "version": "base",
+            "replay": 3,
+            "diagnostics": [
+              {
+                "error_type": "out-of-bounds",
+                "detection_mechanism": "ubsan",
+                "matches_target": true,
+                "location": {
+                  "file": "decompress.c",
+                  "line": 299,
+                  "column": 24
+                }
+              }
+            ]
+          }
+        ],
+        "correlations": {
+          "base": {
+            "summary": {
+              "findings": 1,
+              "changed_line_overlaps": 1,
+              "file_only_overlaps": 0,
+              "unresolved": 0
+            },
+            "findings": [
+              {
+                "finding_index": 0,
+                "detection_mechanism": "ubsan",
+                "error_type": "out-of-bounds",
+                "correlation_status": "changed_line_overlap",
+                "evidence_strength": "strong",
+                "matches": [
+                  {
+                    "relation": "changed_line_overlap",
+                    "strength": "strong",
+                    "reported_path": "decompress.c",
+                    "repository_path": "decompress.c",
+                    "path_match_method": "exact_relative",
+                    "reported_line": 299,
+                    "source": "primary_location",
+                    "frame_index": null,
+                    "function": null,
+                    "diff_hunk_indices": [
+                      1
+                    ],
+                    "reason": "Reported location overlaps a changed line on the correct side of the diff."
+                  },
+                  {
+                    "relation": "changed_line_overlap",
+                    "strength": "medium",
+                    "reported_path": "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/decompress.c",
+                    "repository_path": "decompress.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 299,
+                    "source": "primary_stack_frame",
+                    "frame_index": 0,
+                    "function": "BZ2_decompress",
+                    "diff_hunk_indices": [
+                      1
+                    ],
+                    "reason": "Reported location overlaps a changed line on the correct side of the diff."
+                  }
+                ],
+                "path_warnings": [],
+                "related_stacks_excluded": true
+              }
+            ]
+          }
+        },
+        "role": "alternate",
+        "base_target_reproduced": true,
+        "patched_target_reproduced": false,
+        "patched_expected_behavior": true,
+        "stable_target_observation": true
+      }
+    ],
+    "complete": true,
+    "inconclusive_reasons": [],
+    "suggested_exit_code": 20,
+    "exit_code_policy": "40 > 20 > 10 > 30 > 0; tool configuration errors are handled by CLI/integration layer.",
+    "limitations": [
+      "FIXED means not observed in the configured tests; it does not prove the absence of all vulnerabilities.",
+      "Newly observed sanitizer findings are not automatically caused by the patch.",
+      "The target issue signature and independent functional oracles must be approved outside the classifier.",
+      "Completion attestations are supplied by other modules and are not independently verified here."
+    ]
+  },
+  "hardening": {
+    "schema_version": "1.0",
+    "analysis_type": "target_hardening",
+    "reports": {
+      "base": {
+        "schema_version": "1.0",
+        "analysis_type": "elf_hardening",
+        "binary": "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/release/source/bzip2",
+        "binary_sha256": "27be58a740402841dc2aee252561890c1108677b775f9cae7da8a1ce8ec0cf34",
+        "elf": {
+          "class": "ELF64",
+          "data": "2's complement, little endian",
+          "type": "DYN (Position-Independent Executable file)",
+          "machine": "Advanced Micro Devices X86-64"
+        },
+        "protections": {
+          "relro": {
+            "status": "full",
+            "reason": "GNU_RELRO is present and the dynamic section requests immediate binding (BIND_NOW/NOW).",
+            "evidence": {
+              "gnu_relro_segment": true,
+              "bind_now": true,
+              "dynamic_flags": [
+                "BIND_NOW",
+                "NOW",
+                "PIE"
+              ]
+            }
+          },
+          "pie": {
+            "status": "enabled",
+            "reason": "The ELF is ET_DYN and contains an interpreter, which is the PIE executable layout.",
+            "evidence": {
+              "elf_type": "DYN (Position-Independent Executable file)",
+              "has_interp": true,
+              "pie_dynamic_flag": true
+            }
+          },
+          "nx": {
+            "status": "enabled",
+            "reason": "The GNU_STACK segment is not marked executable.",
+            "evidence": {
+              "gnu_stack_flags": "RW"
+            }
+          },
+          "stack_canary": {
+            "status": "present",
+            "reason": "The binary references the stack-protector runtime symbol.",
+            "evidence": {
+              "symbols": [
+                "__stack_chk_fail"
+              ],
+              "canary_instruction_count": 47
+            }
+          }
+        },
+        "evidence": {
+          "commands": [
+            [
+              "readelf",
+              "-hW",
+              "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/release/source/bzip2"
+            ],
+            [
+              "readelf",
+              "-lW",
+              "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/release/source/bzip2"
+            ],
+            [
+              "readelf",
+              "-dW",
+              "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/release/source/bzip2"
+            ],
+            [
+              "readelf",
+              "-sW",
+              "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/release/source/bzip2"
+            ],
+            [
+              "objdump",
+              "-d",
+              "--no-show-raw-insn",
+              "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/release/source/bzip2"
+            ]
+          ],
+          "program_headers": {
+            "has_gnu_relro": true,
+            "has_interp": true,
+            "gnu_stack_flags": "RW",
+            "load_segments": 4
+          },
+          "dynamic": {
+            "bind_now": true,
+            "pie_flag": true,
+            "flags": [
+              "BIND_NOW",
+              "NOW",
+              "PIE"
+            ]
+          },
+          "symbols": {
+            "stack_canary_symbols": [
+              "__stack_chk_fail"
+            ],
+            "has_stack_canary_symbol": true
+          },
+          "disassembly": {
+            "canary_instruction_count": 47,
+            "has_canary_instruction": true
+          }
+        },
+        "limitations": [
+          "PIE does not prove that ASLR is enabled in the runtime environment.",
+          "A stack-canary symbol or instruction does not prove that every function is protected.",
+          "RELRO classification is based on the GNU_RELRO segment and immediate-binding flags.",
+          "The inspection describes the binary, not the compiler flags that produced it."
+        ]
+      },
+      "patched": {
+        "schema_version": "1.0",
+        "analysis_type": "elf_hardening",
+        "binary": "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/patched/release/source/bzip2",
+        "binary_sha256": "6b59fe1ac95f8899e0f493954a15ab8760462375f4fb34db7af19dc7bcbef606",
+        "elf": {
+          "class": "ELF64",
+          "data": "2's complement, little endian",
+          "type": "EXEC (Executable file)",
+          "machine": "Advanced Micro Devices X86-64"
+        },
+        "protections": {
+          "relro": {
+            "status": "full",
+            "reason": "GNU_RELRO is present and the dynamic section requests immediate binding (BIND_NOW/NOW).",
+            "evidence": {
+              "gnu_relro_segment": true,
+              "bind_now": true,
+              "dynamic_flags": [
+                "BIND_NOW",
+                "NOW"
+              ]
+            }
+          },
+          "pie": {
+            "status": "disabled",
+            "reason": "The ELF is ET_EXEC, a fixed-address executable.",
+            "evidence": {
+              "elf_type": "EXEC (Executable file)",
+              "has_interp": true,
+              "pie_dynamic_flag": false
+            }
+          },
+          "nx": {
+            "status": "enabled",
+            "reason": "The GNU_STACK segment is not marked executable.",
+            "evidence": {
+              "gnu_stack_flags": "RW"
+            }
+          },
+          "stack_canary": {
+            "status": "present",
+            "reason": "The binary references the stack-protector runtime symbol.",
+            "evidence": {
+              "symbols": [
+                "__stack_chk_fail"
+              ],
+              "canary_instruction_count": 47
+            }
+          }
+        },
+        "evidence": {
+          "commands": [
+            [
+              "readelf",
+              "-hW",
+              "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/patched/release/source/bzip2"
+            ],
+            [
+              "readelf",
+              "-lW",
+              "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/patched/release/source/bzip2"
+            ],
+            [
+              "readelf",
+              "-dW",
+              "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/patched/release/source/bzip2"
+            ],
+            [
+              "readelf",
+              "-sW",
+              "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/patched/release/source/bzip2"
+            ],
+            [
+              "objdump",
+              "-d",
+              "--no-show-raw-insn",
+              "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/patched/release/source/bzip2"
+            ]
+          ],
+          "program_headers": {
+            "has_gnu_relro": true,
+            "has_interp": true,
+            "gnu_stack_flags": "RW",
+            "load_segments": 4
+          },
+          "dynamic": {
+            "bind_now": true,
+            "pie_flag": false,
+            "flags": [
+              "BIND_NOW",
+              "NOW"
+            ]
+          },
+          "symbols": {
+            "stack_canary_symbols": [
+              "__stack_chk_fail"
+            ],
+            "has_stack_canary_symbol": true
+          },
+          "disassembly": {
+            "canary_instruction_count": 47,
+            "has_canary_instruction": true
+          }
+        },
+        "limitations": [
+          "PIE does not prove that ASLR is enabled in the runtime environment.",
+          "A stack-canary symbol or instruction does not prove that every function is protected.",
+          "RELRO classification is based on the GNU_RELRO segment and immediate-binding flags.",
+          "The inspection describes the binary, not the compiler flags that produced it."
+        ]
+      }
+    },
+    "errors": [],
+    "comparison": {
+      "schema_version": "1.0",
+      "analysis_type": "elf_hardening_comparison",
+      "base_binary_sha256": "27be58a740402841dc2aee252561890c1108677b775f9cae7da8a1ce8ec0cf34",
+      "patched_binary_sha256": "6b59fe1ac95f8899e0f493954a15ab8760462375f4fb34db7af19dc7bcbef606",
+      "changes": [
+        {
+          "protection": "pie",
+          "base": "enabled",
+          "patched": "disabled",
+          "direction": "regressed"
+        }
+      ],
+      "warnings": [
+        "pie protection regressed from 'enabled' to 'disabled' between the base and patched binaries."
+      ],
+      "unexpected_changes": [
+        {
+          "protection": "pie",
+          "base": "enabled",
+          "patched": "disabled",
+          "direction": "regressed"
+        }
+      ]
+    },
+    "requirements": {
+      "base": {
+        "compliant": true,
+        "results": [
+          {
+            "protection": "relro",
+            "expected": "full",
+            "observed": "full",
+            "compliant": true,
+            "reason": "GNU_RELRO is present and the dynamic section requests immediate binding (BIND_NOW/NOW)."
+          },
+          {
+            "protection": "pie",
+            "expected": "enabled",
+            "observed": "enabled",
+            "compliant": true,
+            "reason": "The ELF is ET_DYN and contains an interpreter, which is the PIE executable layout."
+          },
+          {
+            "protection": "nx",
+            "expected": "enabled",
+            "observed": "enabled",
+            "compliant": true,
+            "reason": "The GNU_STACK segment is not marked executable."
+          },
+          {
+            "protection": "stack_canary",
+            "expected": "present",
+            "observed": "present",
+            "compliant": true,
+            "reason": "The binary references the stack-protector runtime symbol."
+          }
+        ]
+      },
+      "patched": {
+        "compliant": false,
+        "results": [
+          {
+            "protection": "relro",
+            "expected": "full",
+            "observed": "full",
+            "compliant": true,
+            "reason": "GNU_RELRO is present and the dynamic section requests immediate binding (BIND_NOW/NOW)."
+          },
+          {
+            "protection": "pie",
+            "expected": "enabled",
+            "observed": "disabled",
+            "compliant": false,
+            "reason": "The ELF is ET_EXEC, a fixed-address executable."
+          },
+          {
+            "protection": "nx",
+            "expected": "enabled",
+            "observed": "enabled",
+            "compliant": true,
+            "reason": "The GNU_STACK segment is not marked executable."
+          },
+          {
+            "protection": "stack_canary",
+            "expected": "present",
+            "observed": "present",
+            "compliant": true,
+            "reason": "The binary references the stack-protector runtime symbol."
+          }
+        ]
+      }
+    }
+  },
+  "reference_verification": {
+    "schema_version": "1.0",
+    "analysis_type": "reference_oracle_verification",
+    "checks": [
+      {
+        "test_id": "FUN-VALID-9",
+        "version": "base",
+        "version_label": "base",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "FUN-VALID-9",
+        "version": "patched",
+        "version_label": "regression",
+        "expected": "fail",
+        "observed": "fail",
+        "matches": true
+      },
+      {
+        "test_id": "FUN-VALID-1",
+        "version": "base",
+        "version_label": "base",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "FUN-VALID-1",
+        "version": "patched",
+        "version_label": "regression",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "INV-MAGIC",
+        "version": "base",
+        "version_label": "base",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "INV-MAGIC",
+        "version": "patched",
+        "version_label": "regression",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "INV-TRUNCATED",
+        "version": "base",
+        "version_label": "base",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "INV-TRUNCATED",
+        "version": "patched",
+        "version_label": "regression",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "SEC-ORIGINAL",
+        "version": "base",
+        "version_label": "base",
+        "expected": "vulnerable",
+        "observed": "vulnerable",
+        "matches": true
+      },
+      {
+        "test_id": "SEC-ORIGINAL",
+        "version": "patched",
+        "version_label": "regression",
+        "expected": "fixed",
+        "observed": "fixed",
+        "matches": true
+      },
+      {
+        "test_id": "SEC-ALTERNATE",
+        "version": "base",
+        "version_label": "base",
+        "expected": "vulnerable",
+        "observed": "vulnerable",
+        "matches": true
+      },
+      {
+        "test_id": "SEC-ALTERNATE",
+        "version": "patched",
+        "version_label": "regression",
+        "expected": "fixed",
+        "observed": "fixed",
+        "matches": true
+      }
+    ],
+    "mismatches": [],
+    "verified_versions": [
+      "base",
+      "regression"
+    ]
+  },
+  "reproducers": {},
+  "persistent_regressions": {
+    "schema_version": "1.0",
+    "analysis_type": "persistent_regression_suite",
+    "tests": [
+      {
+        "name": "bzip2-SEC-ORIGINAL",
+        "test_id": "SEC-ORIGINAL",
+        "input": "/project/regression/bzip2/bzip2-SEC-ORIGINAL.input",
+        "status": "PASS",
+        "validation": {
+          "status": "PASS",
+          "stability": {
+            "base": "STABLE",
+            "patched": "STABLE",
+            "overall": "STABLE"
+          },
+          "base": {
+            "matches_expected_error": true,
+            "results": [
+              {
+                "command": [
+                  "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/regression/bzip2/bzip2-SEC-ORIGINAL.input"
+                ],
+                "returncode": 1,
+                "signal": null,
+                "stdout": "",
+                "stderr": "decompress.c:299:24: runtime error: index 18002 out of bounds for type 'UChar [18002]'\n    #0 0x5555556199bf in BZ2_decompress /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/decompress.c:299\n    #1 0x5555555f05bf in BZ2_bzDecompress /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzlib.c:842\n    #2 0x5555555f38bc in BZ2_bzRead /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzlib.c:1199\n    #3 0x5555555e16af in uncompressStream /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2.c:462\n    #4 0x5555555e3a05 in uncompress /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2.c:1472\n    #5 0x5555555e6f92 in main /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2.c:1984\n    #6 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #7 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #8 0x5555555df530 in _start (/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2+0x8b530)\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_1"
+              },
+              {
+                "command": [
+                  "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/regression/bzip2/bzip2-SEC-ORIGINAL.input"
+                ],
+                "returncode": 1,
+                "signal": null,
+                "stdout": "",
+                "stderr": "decompress.c:299:24: runtime error: index 18002 out of bounds for type 'UChar [18002]'\n    #0 0x5555556199bf in BZ2_decompress /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/decompress.c:299\n    #1 0x5555555f05bf in BZ2_bzDecompress /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzlib.c:842\n    #2 0x5555555f38bc in BZ2_bzRead /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzlib.c:1199\n    #3 0x5555555e16af in uncompressStream /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2.c:462\n    #4 0x5555555e3a05 in uncompress /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2.c:1472\n    #5 0x5555555e6f92 in main /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2.c:1984\n    #6 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #7 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #8 0x5555555df530 in _start (/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2+0x8b530)\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_1"
+              },
+              {
+                "command": [
+                  "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/regression/bzip2/bzip2-SEC-ORIGINAL.input"
+                ],
+                "returncode": 1,
+                "signal": null,
+                "stdout": "",
+                "stderr": "decompress.c:299:24: runtime error: index 18002 out of bounds for type 'UChar [18002]'\n    #0 0x5555556199bf in BZ2_decompress /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/decompress.c:299\n    #1 0x5555555f05bf in BZ2_bzDecompress /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzlib.c:842\n    #2 0x5555555f38bc in BZ2_bzRead /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzlib.c:1199\n    #3 0x5555555e16af in uncompressStream /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2.c:462\n    #4 0x5555555e3a05 in uncompress /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2.c:1472\n    #5 0x5555555e6f92 in main /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2.c:1984\n    #6 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #7 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #8 0x5555555df530 in _start (/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2+0x8b530)\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_1"
+              }
+            ]
+          },
+          "patched": {
+            "same_error_absent": true,
+            "expected_behavior": true,
+            "results": [
+              {
+                "command": [
+                  "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/patched/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/regression/bzip2/bzip2-SEC-ORIGINAL.input"
+                ],
+                "returncode": 2,
+                "signal": null,
+                "stdout": "",
+                "stderr": "\nbzip2: Compressed file ends unexpectedly;\n\tperhaps it is corrupted?  *Possible* reason follows.\nbzip2: Success\n\tInput file = /project/regression/bzip2/bzip2-SEC-ORIGINAL.input, output file = (stdout)\n\nIt is possible that the compressed file(s) have become corrupted.\nYou can use the -tvv option to test integrity of such files.\n\nYou can use the `bzip2recover' program to attempt to recover\ndata from undamaged sections of corrupted files.\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_2"
+              },
+              {
+                "command": [
+                  "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/patched/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/regression/bzip2/bzip2-SEC-ORIGINAL.input"
+                ],
+                "returncode": 2,
+                "signal": null,
+                "stdout": "",
+                "stderr": "\nbzip2: Compressed file ends unexpectedly;\n\tperhaps it is corrupted?  *Possible* reason follows.\nbzip2: Success\n\tInput file = /project/regression/bzip2/bzip2-SEC-ORIGINAL.input, output file = (stdout)\n\nIt is possible that the compressed file(s) have become corrupted.\nYou can use the -tvv option to test integrity of such files.\n\nYou can use the `bzip2recover' program to attempt to recover\ndata from undamaged sections of corrupted files.\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_2"
+              },
+              {
+                "command": [
+                  "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/patched/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/regression/bzip2/bzip2-SEC-ORIGINAL.input"
+                ],
+                "returncode": 2,
+                "signal": null,
+                "stdout": "",
+                "stderr": "\nbzip2: Compressed file ends unexpectedly;\n\tperhaps it is corrupted?  *Possible* reason follows.\nbzip2: Success\n\tInput file = /project/regression/bzip2/bzip2-SEC-ORIGINAL.input, output file = (stdout)\n\nIt is possible that the compressed file(s) have become corrupted.\nYou can use the -tvv option to test integrity of such files.\n\nYou can use the `bzip2recover' program to attempt to recover\ndata from undamaged sections of corrupted files.\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_2"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "bzip2-SEC-ALTERNATE",
+        "test_id": "SEC-ALTERNATE",
+        "input": "/project/regression/bzip2/bzip2-SEC-ALTERNATE.input",
+        "status": "PASS",
+        "validation": {
+          "status": "PASS",
+          "stability": {
+            "base": "STABLE",
+            "patched": "STABLE",
+            "overall": "STABLE"
+          },
+          "base": {
+            "matches_expected_error": true,
+            "results": [
+              {
+                "command": [
+                  "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/regression/bzip2/bzip2-SEC-ALTERNATE.input"
+                ],
+                "returncode": 1,
+                "signal": null,
+                "stdout": "",
+                "stderr": "decompress.c:299:24: runtime error: index 18002 out of bounds for type 'UChar [18002]'\n    #0 0x5555556199bf in BZ2_decompress /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/decompress.c:299\n    #1 0x5555555f05bf in BZ2_bzDecompress /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzlib.c:842\n    #2 0x5555555f38bc in BZ2_bzRead /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzlib.c:1199\n    #3 0x5555555e16af in uncompressStream /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2.c:462\n    #4 0x5555555e3a05 in uncompress /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2.c:1472\n    #5 0x5555555e6f92 in main /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2.c:1984\n    #6 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #7 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #8 0x5555555df530 in _start (/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2+0x8b530)\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_1"
+              },
+              {
+                "command": [
+                  "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/regression/bzip2/bzip2-SEC-ALTERNATE.input"
+                ],
+                "returncode": 1,
+                "signal": null,
+                "stdout": "",
+                "stderr": "decompress.c:299:24: runtime error: index 18002 out of bounds for type 'UChar [18002]'\n    #0 0x5555556199bf in BZ2_decompress /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/decompress.c:299\n    #1 0x5555555f05bf in BZ2_bzDecompress /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzlib.c:842\n    #2 0x5555555f38bc in BZ2_bzRead /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzlib.c:1199\n    #3 0x5555555e16af in uncompressStream /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2.c:462\n    #4 0x5555555e3a05 in uncompress /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2.c:1472\n    #5 0x5555555e6f92 in main /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2.c:1984\n    #6 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #7 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #8 0x5555555df530 in _start (/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2+0x8b530)\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_1"
+              },
+              {
+                "command": [
+                  "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/regression/bzip2/bzip2-SEC-ALTERNATE.input"
+                ],
+                "returncode": 1,
+                "signal": null,
+                "stdout": "",
+                "stderr": "decompress.c:299:24: runtime error: index 18002 out of bounds for type 'UChar [18002]'\n    #0 0x5555556199bf in BZ2_decompress /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/decompress.c:299\n    #1 0x5555555f05bf in BZ2_bzDecompress /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzlib.c:842\n    #2 0x5555555f38bc in BZ2_bzRead /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzlib.c:1199\n    #3 0x5555555e16af in uncompressStream /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2.c:462\n    #4 0x5555555e3a05 in uncompress /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2.c:1472\n    #5 0x5555555e6f92 in main /project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2.c:1984\n    #6 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #7 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #8 0x5555555df530 in _start (/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/base/asan_ubsan/source/bzip2+0x8b530)\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_1"
+              }
+            ]
+          },
+          "patched": {
+            "same_error_absent": true,
+            "expected_behavior": true,
+            "results": [
+              {
+                "command": [
+                  "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/patched/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/regression/bzip2/bzip2-SEC-ALTERNATE.input"
+                ],
+                "returncode": 2,
+                "signal": null,
+                "stdout": "",
+                "stderr": "\nbzip2: Compressed file ends unexpectedly;\n\tperhaps it is corrupted?  *Possible* reason follows.\nbzip2: Success\n\tInput file = /project/regression/bzip2/bzip2-SEC-ALTERNATE.input, output file = (stdout)\n\nIt is possible that the compressed file(s) have become corrupted.\nYou can use the -tvv option to test integrity of such files.\n\nYou can use the `bzip2recover' program to attempt to recover\ndata from undamaged sections of corrupted files.\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_2"
+              },
+              {
+                "command": [
+                  "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/patched/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/regression/bzip2/bzip2-SEC-ALTERNATE.input"
+                ],
+                "returncode": 2,
+                "signal": null,
+                "stdout": "",
+                "stderr": "\nbzip2: Compressed file ends unexpectedly;\n\tperhaps it is corrupted?  *Possible* reason follows.\nbzip2: Success\n\tInput file = /project/regression/bzip2/bzip2-SEC-ALTERNATE.input, output file = (stdout)\n\nIt is possible that the compressed file(s) have become corrupted.\nYou can use the -tvv option to test integrity of such files.\n\nYou can use the `bzip2recover' program to attempt to recover\ndata from undamaged sections of corrupted files.\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_2"
+              },
+              {
+                "command": [
+                  "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution/spv-execution-cvnfxqql/builds/patched/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/regression/bzip2/bzip2-SEC-ALTERNATE.input"
+                ],
+                "returncode": 2,
+                "signal": null,
+                "stdout": "",
+                "stderr": "\nbzip2: Compressed file ends unexpectedly;\n\tperhaps it is corrupted?  *Possible* reason follows.\nbzip2: Success\n\tInput file = /project/regression/bzip2/bzip2-SEC-ALTERNATE.input, output file = (stdout)\n\nIt is possible that the compressed file(s) have become corrupted.\nYou can use the -tvv option to test integrity of such files.\n\nYou can use the `bzip2recover' program to attempt to recover\ndata from undamaged sections of corrupted files.\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_2"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "summary": {
+      "total": 2,
+      "PASS": 2,
+      "VULN_REMAINS": 0,
+      "FAIL": 0,
+      "INCONCLUSIVE": 0
+    }
+  },
+  "diff_summary": {
+    "files_analyzed": 2,
+    "files_with_text_changes": 2,
+    "binary_files": 0,
+    "mode_changed_files": 0,
+    "hunks": 5,
+    "added_lines": 13,
+    "removed_lines": 5
+  },
+  "execution_summary": {
+    "status": "completed",
+    "builds": [
+      {
+        "version": "base",
+        "build_type": "release",
+        "status": "built",
+        "binary_sha256": "27be58a740402841dc2aee252561890c1108677b775f9cae7da8a1ce8ec0cf34",
+        "error": null
+      },
+      {
+        "version": "patched",
+        "build_type": "release",
+        "status": "built",
+        "binary_sha256": "6b59fe1ac95f8899e0f493954a15ab8760462375f4fb34db7af19dc7bcbef606",
+        "error": null
+      },
+      {
+        "version": "base",
+        "build_type": "asan_ubsan",
+        "status": "built",
+        "binary_sha256": "3277ddb3e2aa63bb558cbf98acfdf9167c83cc8b86e37c447f787b6caca973f3",
+        "error": null
+      },
+      {
+        "version": "patched",
+        "build_type": "asan_ubsan",
+        "status": "built",
+        "binary_sha256": "31273035562bf50ab5568b20de0fffe276395e17d60767ea7904be7034461f68",
+        "error": null
+      }
+    ],
+    "executions": 72,
+    "skipped": 0
+  },
+  "artifacts": {
+    "workspace": "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl",
+    "execution": "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/execution.json",
+    "hardening": "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/hardening.json",
+    "diff": "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/diff.json",
+    "classification": "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/classification.json",
+    "classifier_suite": "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/classifier-suite.json",
+    "reference_verification": "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/reference-verification.json",
+    "persistent_regressions": "/project/artifacts/bzip2-regression2/spv-bzip2-regression-rlg59vzl/persistent-regressions.json"
+  },
+  "limitations": [
+    "A FIXED result means the target issue was not observed in the configured tests; it does not prove global safety.",
+    "Hardening warnings describe the built binaries and do not by themselves prove exploitability.",
+    "The reference oracle is independent of the patched program's output, but it is limited to the configured tests."
+  ]
+}

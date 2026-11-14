@@ -1,0 +1,1119 @@
+{
+  "schema_version": "1.0",
+  "analysis_type": "target_scenario_evaluation",
+  "target_id": "bzip2",
+  "target_name": "bzip2 1.0.6",
+  "scenario": "incomplete",
+  "patched_version": "incomplete",
+  "expected_exit_code": 10,
+  "expected_statuses": [
+    "INCOMPLETE_FIX"
+  ],
+  "observed_exit_code": 10,
+  "matches_expected_exit_code": true,
+  "classification": {
+    "schema_version": "1.0",
+    "analysis_type": "patch_classification",
+    "target_id": "bzip2",
+    "target_issue_id": "CVE-2019-12900",
+    "statuses": [
+      "INCOMPLETE_FIX"
+    ],
+    "security_status": "INCOMPLETE_FIX",
+    "functional_status": "PASS",
+    "new_issues": [],
+    "tests": [
+      {
+        "test_id": "FUN-VALID-9",
+        "kind": "functional",
+        "build_type": "release",
+        "replays": {
+          "base": 3,
+          "patched": 3
+        },
+        "sufficient_replays": true,
+        "findings": [],
+        "status": "PASS",
+        "base_matches_reference": true,
+        "patched_matches_reference": true
+      },
+      {
+        "test_id": "FUN-VALID-1",
+        "kind": "functional",
+        "build_type": "release",
+        "replays": {
+          "base": 3,
+          "patched": 3
+        },
+        "sufficient_replays": true,
+        "findings": [],
+        "status": "PASS",
+        "base_matches_reference": true,
+        "patched_matches_reference": true
+      },
+      {
+        "test_id": "SEC-ORIGINAL",
+        "kind": "security",
+        "build_type": "asan_ubsan",
+        "replays": {
+          "base": 3,
+          "patched": 3
+        },
+        "sufficient_replays": true,
+        "findings": [
+          {
+            "version": "base",
+            "replay": 1,
+            "diagnostics": [
+              {
+                "error_type": "out-of-bounds",
+                "detection_mechanism": "ubsan",
+                "matches_target": true,
+                "location": {
+                  "file": "decompress.c",
+                  "line": 299,
+                  "column": 24
+                }
+              }
+            ]
+          },
+          {
+            "version": "base",
+            "replay": 2,
+            "diagnostics": [
+              {
+                "error_type": "out-of-bounds",
+                "detection_mechanism": "ubsan",
+                "matches_target": true,
+                "location": {
+                  "file": "decompress.c",
+                  "line": 299,
+                  "column": 24
+                }
+              }
+            ]
+          },
+          {
+            "version": "base",
+            "replay": 3,
+            "diagnostics": [
+              {
+                "error_type": "out-of-bounds",
+                "detection_mechanism": "ubsan",
+                "matches_target": true,
+                "location": {
+                  "file": "decompress.c",
+                  "line": 299,
+                  "column": 24
+                }
+              }
+            ]
+          }
+        ],
+        "correlations": {
+          "base": {
+            "summary": {
+              "findings": 1,
+              "changed_line_overlaps": 0,
+              "file_only_overlaps": 1,
+              "unresolved": 0
+            },
+            "findings": [
+              {
+                "finding_index": 0,
+                "detection_mechanism": "ubsan",
+                "error_type": "out-of-bounds",
+                "correlation_status": "file_overlap_only",
+                "evidence_strength": "weak",
+                "matches": [
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "decompress.c",
+                    "repository_path": "decompress.c",
+                    "path_match_method": "exact_relative",
+                    "reported_line": 299,
+                    "source": "primary_location",
+                    "frame_index": null,
+                    "function": null,
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  },
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/decompress.c",
+                    "repository_path": "decompress.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 299,
+                    "source": "primary_stack_frame",
+                    "frame_index": 0,
+                    "function": "BZ2_decompress",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  }
+                ],
+                "path_warnings": [],
+                "related_stacks_excluded": true
+              }
+            ]
+          }
+        },
+        "role": "original",
+        "base_target_reproduced": true,
+        "patched_target_reproduced": false,
+        "patched_expected_behavior": true,
+        "stable_target_observation": true
+      },
+      {
+        "test_id": "SEC-ALTERNATE",
+        "kind": "security",
+        "build_type": "asan_ubsan",
+        "replays": {
+          "base": 3,
+          "patched": 3
+        },
+        "sufficient_replays": true,
+        "findings": [
+          {
+            "version": "base",
+            "replay": 1,
+            "diagnostics": [
+              {
+                "error_type": "out-of-bounds",
+                "detection_mechanism": "ubsan",
+                "matches_target": true,
+                "location": {
+                  "file": "decompress.c",
+                  "line": 299,
+                  "column": 24
+                }
+              }
+            ]
+          },
+          {
+            "version": "base",
+            "replay": 2,
+            "diagnostics": [
+              {
+                "error_type": "out-of-bounds",
+                "detection_mechanism": "ubsan",
+                "matches_target": true,
+                "location": {
+                  "file": "decompress.c",
+                  "line": 299,
+                  "column": 24
+                }
+              }
+            ]
+          },
+          {
+            "version": "base",
+            "replay": 3,
+            "diagnostics": [
+              {
+                "error_type": "out-of-bounds",
+                "detection_mechanism": "ubsan",
+                "matches_target": true,
+                "location": {
+                  "file": "decompress.c",
+                  "line": 299,
+                  "column": 24
+                }
+              }
+            ]
+          },
+          {
+            "version": "patched",
+            "replay": 1,
+            "diagnostics": [
+              {
+                "error_type": "out-of-bounds",
+                "detection_mechanism": "ubsan",
+                "matches_target": true,
+                "location": {
+                  "file": "decompress.c",
+                  "line": 302,
+                  "column": 24
+                }
+              }
+            ]
+          },
+          {
+            "version": "patched",
+            "replay": 2,
+            "diagnostics": [
+              {
+                "error_type": "out-of-bounds",
+                "detection_mechanism": "ubsan",
+                "matches_target": true,
+                "location": {
+                  "file": "decompress.c",
+                  "line": 302,
+                  "column": 24
+                }
+              }
+            ]
+          },
+          {
+            "version": "patched",
+            "replay": 3,
+            "diagnostics": [
+              {
+                "error_type": "out-of-bounds",
+                "detection_mechanism": "ubsan",
+                "matches_target": true,
+                "location": {
+                  "file": "decompress.c",
+                  "line": 302,
+                  "column": 24
+                }
+              }
+            ]
+          }
+        ],
+        "correlations": {
+          "base": {
+            "summary": {
+              "findings": 1,
+              "changed_line_overlaps": 0,
+              "file_only_overlaps": 1,
+              "unresolved": 0
+            },
+            "findings": [
+              {
+                "finding_index": 0,
+                "detection_mechanism": "ubsan",
+                "error_type": "out-of-bounds",
+                "correlation_status": "file_overlap_only",
+                "evidence_strength": "weak",
+                "matches": [
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "decompress.c",
+                    "repository_path": "decompress.c",
+                    "path_match_method": "exact_relative",
+                    "reported_line": 299,
+                    "source": "primary_location",
+                    "frame_index": null,
+                    "function": null,
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  },
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/decompress.c",
+                    "repository_path": "decompress.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 299,
+                    "source": "primary_stack_frame",
+                    "frame_index": 0,
+                    "function": "BZ2_decompress",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  }
+                ],
+                "path_warnings": [],
+                "related_stacks_excluded": true
+              }
+            ]
+          },
+          "patched": {
+            "summary": {
+              "findings": 1,
+              "changed_line_overlaps": 0,
+              "file_only_overlaps": 1,
+              "unresolved": 0
+            },
+            "findings": [
+              {
+                "finding_index": 0,
+                "detection_mechanism": "ubsan",
+                "error_type": "out-of-bounds",
+                "correlation_status": "file_overlap_only",
+                "evidence_strength": "weak",
+                "matches": [
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "decompress.c",
+                    "repository_path": "decompress.c",
+                    "path_match_method": "exact_relative",
+                    "reported_line": 302,
+                    "source": "primary_location",
+                    "frame_index": null,
+                    "function": null,
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  },
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/decompress.c",
+                    "repository_path": "decompress.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 302,
+                    "source": "primary_stack_frame",
+                    "frame_index": 0,
+                    "function": "BZ2_decompress",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  }
+                ],
+                "path_warnings": [],
+                "related_stacks_excluded": true
+              }
+            ]
+          }
+        },
+        "role": "alternate",
+        "base_target_reproduced": true,
+        "patched_target_reproduced": true,
+        "patched_expected_behavior": false,
+        "stable_target_observation": true
+      }
+    ],
+    "complete": true,
+    "inconclusive_reasons": [],
+    "suggested_exit_code": 10,
+    "exit_code_policy": "40 > 20 > 10 > 30 > 0; tool configuration errors are handled by CLI/integration layer.",
+    "limitations": [
+      "FIXED means not observed in the configured tests; it does not prove the absence of all vulnerabilities.",
+      "Newly observed sanitizer findings are not automatically caused by the patch.",
+      "The target issue signature and independent functional oracles must be approved outside the classifier.",
+      "Completion attestations are supplied by other modules and are not independently verified here."
+    ]
+  },
+  "hardening": {
+    "schema_version": "1.0",
+    "analysis_type": "target_hardening",
+    "reports": {
+      "base": {
+        "schema_version": "1.0",
+        "analysis_type": "elf_hardening",
+        "binary": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/release/source/bzip2",
+        "binary_sha256": "27be58a740402841dc2aee252561890c1108677b775f9cae7da8a1ce8ec0cf34",
+        "elf": {
+          "class": "ELF64",
+          "data": "2's complement, little endian",
+          "type": "DYN (Position-Independent Executable file)",
+          "machine": "Advanced Micro Devices X86-64"
+        },
+        "protections": {
+          "relro": {
+            "status": "full",
+            "reason": "GNU_RELRO is present and the dynamic section requests immediate binding (BIND_NOW/NOW).",
+            "evidence": {
+              "gnu_relro_segment": true,
+              "bind_now": true,
+              "dynamic_flags": [
+                "BIND_NOW",
+                "NOW",
+                "PIE"
+              ]
+            }
+          },
+          "pie": {
+            "status": "enabled",
+            "reason": "The ELF is ET_DYN and contains an interpreter, which is the PIE executable layout.",
+            "evidence": {
+              "elf_type": "DYN (Position-Independent Executable file)",
+              "has_interp": true,
+              "pie_dynamic_flag": true
+            }
+          },
+          "nx": {
+            "status": "enabled",
+            "reason": "The GNU_STACK segment is not marked executable.",
+            "evidence": {
+              "gnu_stack_flags": "RW"
+            }
+          },
+          "stack_canary": {
+            "status": "present",
+            "reason": "The binary references the stack-protector runtime symbol.",
+            "evidence": {
+              "symbols": [
+                "__stack_chk_fail"
+              ],
+              "canary_instruction_count": 47
+            }
+          }
+        },
+        "evidence": {
+          "commands": [
+            [
+              "readelf",
+              "-hW",
+              "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/release/source/bzip2"
+            ],
+            [
+              "readelf",
+              "-lW",
+              "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/release/source/bzip2"
+            ],
+            [
+              "readelf",
+              "-dW",
+              "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/release/source/bzip2"
+            ],
+            [
+              "readelf",
+              "-sW",
+              "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/release/source/bzip2"
+            ],
+            [
+              "objdump",
+              "-d",
+              "--no-show-raw-insn",
+              "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/release/source/bzip2"
+            ]
+          ],
+          "program_headers": {
+            "has_gnu_relro": true,
+            "has_interp": true,
+            "gnu_stack_flags": "RW",
+            "load_segments": 4
+          },
+          "dynamic": {
+            "bind_now": true,
+            "pie_flag": true,
+            "flags": [
+              "BIND_NOW",
+              "NOW",
+              "PIE"
+            ]
+          },
+          "symbols": {
+            "stack_canary_symbols": [
+              "__stack_chk_fail"
+            ],
+            "has_stack_canary_symbol": true
+          },
+          "disassembly": {
+            "canary_instruction_count": 47,
+            "has_canary_instruction": true
+          }
+        },
+        "limitations": [
+          "PIE does not prove that ASLR is enabled in the runtime environment.",
+          "A stack-canary symbol or instruction does not prove that every function is protected.",
+          "RELRO classification is based on the GNU_RELRO segment and immediate-binding flags.",
+          "The inspection describes the binary, not the compiler flags that produced it."
+        ]
+      },
+      "patched": {
+        "schema_version": "1.0",
+        "analysis_type": "elf_hardening",
+        "binary": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/release/source/bzip2",
+        "binary_sha256": "5e65db969d2a87757fea106a6ec75bd28129a4521812c39a2d2ebef09b2388b0",
+        "elf": {
+          "class": "ELF64",
+          "data": "2's complement, little endian",
+          "type": "DYN (Position-Independent Executable file)",
+          "machine": "Advanced Micro Devices X86-64"
+        },
+        "protections": {
+          "relro": {
+            "status": "full",
+            "reason": "GNU_RELRO is present and the dynamic section requests immediate binding (BIND_NOW/NOW).",
+            "evidence": {
+              "gnu_relro_segment": true,
+              "bind_now": true,
+              "dynamic_flags": [
+                "BIND_NOW",
+                "NOW",
+                "PIE"
+              ]
+            }
+          },
+          "pie": {
+            "status": "enabled",
+            "reason": "The ELF is ET_DYN and contains an interpreter, which is the PIE executable layout.",
+            "evidence": {
+              "elf_type": "DYN (Position-Independent Executable file)",
+              "has_interp": true,
+              "pie_dynamic_flag": true
+            }
+          },
+          "nx": {
+            "status": "enabled",
+            "reason": "The GNU_STACK segment is not marked executable.",
+            "evidence": {
+              "gnu_stack_flags": "RW"
+            }
+          },
+          "stack_canary": {
+            "status": "present",
+            "reason": "The binary references the stack-protector runtime symbol.",
+            "evidence": {
+              "symbols": [
+                "__stack_chk_fail"
+              ],
+              "canary_instruction_count": 47
+            }
+          }
+        },
+        "evidence": {
+          "commands": [
+            [
+              "readelf",
+              "-hW",
+              "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/release/source/bzip2"
+            ],
+            [
+              "readelf",
+              "-lW",
+              "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/release/source/bzip2"
+            ],
+            [
+              "readelf",
+              "-dW",
+              "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/release/source/bzip2"
+            ],
+            [
+              "readelf",
+              "-sW",
+              "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/release/source/bzip2"
+            ],
+            [
+              "objdump",
+              "-d",
+              "--no-show-raw-insn",
+              "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/release/source/bzip2"
+            ]
+          ],
+          "program_headers": {
+            "has_gnu_relro": true,
+            "has_interp": true,
+            "gnu_stack_flags": "RW",
+            "load_segments": 4
+          },
+          "dynamic": {
+            "bind_now": true,
+            "pie_flag": true,
+            "flags": [
+              "BIND_NOW",
+              "NOW",
+              "PIE"
+            ]
+          },
+          "symbols": {
+            "stack_canary_symbols": [
+              "__stack_chk_fail"
+            ],
+            "has_stack_canary_symbol": true
+          },
+          "disassembly": {
+            "canary_instruction_count": 47,
+            "has_canary_instruction": true
+          }
+        },
+        "limitations": [
+          "PIE does not prove that ASLR is enabled in the runtime environment.",
+          "A stack-canary symbol or instruction does not prove that every function is protected.",
+          "RELRO classification is based on the GNU_RELRO segment and immediate-binding flags.",
+          "The inspection describes the binary, not the compiler flags that produced it."
+        ]
+      }
+    },
+    "errors": [],
+    "comparison": {
+      "schema_version": "1.0",
+      "analysis_type": "elf_hardening_comparison",
+      "base_binary_sha256": "27be58a740402841dc2aee252561890c1108677b775f9cae7da8a1ce8ec0cf34",
+      "patched_binary_sha256": "5e65db969d2a87757fea106a6ec75bd28129a4521812c39a2d2ebef09b2388b0",
+      "changes": [],
+      "warnings": [],
+      "unexpected_changes": []
+    },
+    "requirements": {
+      "base": {
+        "compliant": true,
+        "results": [
+          {
+            "protection": "relro",
+            "expected": "full",
+            "observed": "full",
+            "compliant": true,
+            "reason": "GNU_RELRO is present and the dynamic section requests immediate binding (BIND_NOW/NOW)."
+          },
+          {
+            "protection": "pie",
+            "expected": "enabled",
+            "observed": "enabled",
+            "compliant": true,
+            "reason": "The ELF is ET_DYN and contains an interpreter, which is the PIE executable layout."
+          },
+          {
+            "protection": "nx",
+            "expected": "enabled",
+            "observed": "enabled",
+            "compliant": true,
+            "reason": "The GNU_STACK segment is not marked executable."
+          },
+          {
+            "protection": "stack_canary",
+            "expected": "present",
+            "observed": "present",
+            "compliant": true,
+            "reason": "The binary references the stack-protector runtime symbol."
+          }
+        ]
+      },
+      "patched": {
+        "compliant": true,
+        "results": [
+          {
+            "protection": "relro",
+            "expected": "full",
+            "observed": "full",
+            "compliant": true,
+            "reason": "GNU_RELRO is present and the dynamic section requests immediate binding (BIND_NOW/NOW)."
+          },
+          {
+            "protection": "pie",
+            "expected": "enabled",
+            "observed": "enabled",
+            "compliant": true,
+            "reason": "The ELF is ET_DYN and contains an interpreter, which is the PIE executable layout."
+          },
+          {
+            "protection": "nx",
+            "expected": "enabled",
+            "observed": "enabled",
+            "compliant": true,
+            "reason": "The GNU_STACK segment is not marked executable."
+          },
+          {
+            "protection": "stack_canary",
+            "expected": "present",
+            "observed": "present",
+            "compliant": true,
+            "reason": "The binary references the stack-protector runtime symbol."
+          }
+        ]
+      }
+    }
+  },
+  "reference_verification": {
+    "schema_version": "1.0",
+    "analysis_type": "reference_oracle_verification",
+    "checks": [
+      {
+        "test_id": "FUN-VALID-9",
+        "version": "base",
+        "version_label": "base",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "FUN-VALID-9",
+        "version": "patched",
+        "version_label": "incomplete",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "FUN-VALID-1",
+        "version": "base",
+        "version_label": "base",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "FUN-VALID-1",
+        "version": "patched",
+        "version_label": "incomplete",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "INV-MAGIC",
+        "version": "base",
+        "version_label": "base",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "INV-MAGIC",
+        "version": "patched",
+        "version_label": "incomplete",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "INV-TRUNCATED",
+        "version": "base",
+        "version_label": "base",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "INV-TRUNCATED",
+        "version": "patched",
+        "version_label": "incomplete",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "SEC-ORIGINAL",
+        "version": "base",
+        "version_label": "base",
+        "expected": "vulnerable",
+        "observed": "vulnerable",
+        "matches": true
+      },
+      {
+        "test_id": "SEC-ORIGINAL",
+        "version": "patched",
+        "version_label": "incomplete",
+        "expected": "fixed",
+        "observed": "fixed",
+        "matches": true
+      },
+      {
+        "test_id": "SEC-ALTERNATE",
+        "version": "base",
+        "version_label": "base",
+        "expected": "vulnerable",
+        "observed": "vulnerable",
+        "matches": true
+      },
+      {
+        "test_id": "SEC-ALTERNATE",
+        "version": "patched",
+        "version_label": "incomplete",
+        "expected": "vulnerable",
+        "observed": "vulnerable",
+        "matches": true
+      }
+    ],
+    "mismatches": [],
+    "verified_versions": [
+      "base",
+      "incomplete"
+    ]
+  },
+  "reproducers": {
+    "schema_version": "1.0",
+    "analysis_type": "target_reproducers",
+    "target_id": "bzip2",
+    "scenario": "incomplete",
+    "repetitions": 3,
+    "bundles": [
+      {
+        "test_id": "SEC-ORIGINAL",
+        "original": {
+          "input": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/SEC-ORIGINAL/original/selector-overflow.bz2",
+          "metadata": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/SEC-ORIGINAL/original/metadata.json",
+          "replay_status": "STABLE"
+        },
+        "minimized": {
+          "input": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/SEC-ORIGINAL/minimized/selector-overflow.bz2",
+          "metadata": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/SEC-ORIGINAL/minimized/metadata.json",
+          "replay_status": "STABLE",
+          "original_size": 4184,
+          "minimized_size": 2274,
+          "reduction_ratio": 0.45650095602294455,
+          "test_count": 13519,
+          "validated": true
+        },
+        "regression_test": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/regression/bzip2-SEC-ORIGINAL.input",
+        "regression_validation": "VULN_REMAINS"
+      },
+      {
+        "test_id": "SEC-ALTERNATE",
+        "original": {
+          "input": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/SEC-ALTERNATE/original/selector-overflow-alt.bz2",
+          "metadata": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/SEC-ALTERNATE/original/metadata.json",
+          "replay_status": "STABLE"
+        },
+        "minimized": {
+          "input": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/SEC-ALTERNATE/minimized/selector-overflow-alt.bz2",
+          "metadata": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/SEC-ALTERNATE/minimized/metadata.json",
+          "replay_status": "STABLE",
+          "original_size": 4184,
+          "minimized_size": 2274,
+          "reduction_ratio": 0.45650095602294455,
+          "test_count": 13519,
+          "validated": true
+        },
+        "regression_test": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/regression/bzip2-SEC-ALTERNATE.input",
+        "regression_validation": "VULN_REMAINS"
+      }
+    ],
+    "regression_tests": [
+      {
+        "test_id": "SEC-ORIGINAL",
+        "input": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/regression/bzip2-SEC-ORIGINAL.input",
+        "validation": {
+          "status": "VULN_REMAINS",
+          "stability": {
+            "base": "STABLE",
+            "patched": "STABLE",
+            "overall": "STABLE"
+          },
+          "base": {
+            "matches_expected_error": true,
+            "results": [
+              {
+                "command": [
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/regression/bzip2-SEC-ORIGINAL.input"
+                ],
+                "returncode": 1,
+                "signal": null,
+                "stdout": "",
+                "stderr": "decompress.c:299:24: runtime error: index 18002 out of bounds for type 'UChar [18002]'\n    #0 0x5555556199bf in BZ2_decompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/decompress.c:299\n    #1 0x5555555f05bf in BZ2_bzDecompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzlib.c:842\n    #2 0x5555555f38bc in BZ2_bzRead /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzlib.c:1199\n    #3 0x5555555e16af in uncompressStream /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2.c:462\n    #4 0x5555555e3a05 in uncompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2.c:1472\n    #5 0x5555555e6f92 in main /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2.c:1984\n    #6 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #7 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #8 0x5555555df530 in _start (/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2+0x8b530)\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_1"
+              },
+              {
+                "command": [
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/regression/bzip2-SEC-ORIGINAL.input"
+                ],
+                "returncode": 1,
+                "signal": null,
+                "stdout": "",
+                "stderr": "decompress.c:299:24: runtime error: index 18002 out of bounds for type 'UChar [18002]'\n    #0 0x5555556199bf in BZ2_decompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/decompress.c:299\n    #1 0x5555555f05bf in BZ2_bzDecompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzlib.c:842\n    #2 0x5555555f38bc in BZ2_bzRead /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzlib.c:1199\n    #3 0x5555555e16af in uncompressStream /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2.c:462\n    #4 0x5555555e3a05 in uncompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2.c:1472\n    #5 0x5555555e6f92 in main /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2.c:1984\n    #6 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #7 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #8 0x5555555df530 in _start (/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2+0x8b530)\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_1"
+              },
+              {
+                "command": [
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/regression/bzip2-SEC-ORIGINAL.input"
+                ],
+                "returncode": 1,
+                "signal": null,
+                "stdout": "",
+                "stderr": "decompress.c:299:24: runtime error: index 18002 out of bounds for type 'UChar [18002]'\n    #0 0x5555556199bf in BZ2_decompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/decompress.c:299\n    #1 0x5555555f05bf in BZ2_bzDecompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzlib.c:842\n    #2 0x5555555f38bc in BZ2_bzRead /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzlib.c:1199\n    #3 0x5555555e16af in uncompressStream /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2.c:462\n    #4 0x5555555e3a05 in uncompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2.c:1472\n    #5 0x5555555e6f92 in main /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2.c:1984\n    #6 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #7 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #8 0x5555555df530 in _start (/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2+0x8b530)\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_1"
+              }
+            ]
+          },
+          "patched": {
+            "same_error_absent": false,
+            "expected_behavior": false,
+            "results": [
+              {
+                "command": [
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/regression/bzip2-SEC-ORIGINAL.input"
+                ],
+                "returncode": 1,
+                "signal": null,
+                "stdout": "",
+                "stderr": "decompress.c:302:24: runtime error: index 18002 out of bounds for type 'UChar [18002]'\n    #0 0x5555556199cf in BZ2_decompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/decompress.c:302\n    #1 0x5555555f05bf in BZ2_bzDecompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzlib.c:842\n    #2 0x5555555f38bc in BZ2_bzRead /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzlib.c:1199\n    #3 0x5555555e16af in uncompressStream /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2.c:462\n    #4 0x5555555e3a05 in uncompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2.c:1472\n    #5 0x5555555e6f92 in main /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2.c:1984\n    #6 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #7 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #8 0x5555555df530 in _start (/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2+0x8b530)\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_1"
+              },
+              {
+                "command": [
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/regression/bzip2-SEC-ORIGINAL.input"
+                ],
+                "returncode": 1,
+                "signal": null,
+                "stdout": "",
+                "stderr": "decompress.c:302:24: runtime error: index 18002 out of bounds for type 'UChar [18002]'\n    #0 0x5555556199cf in BZ2_decompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/decompress.c:302\n    #1 0x5555555f05bf in BZ2_bzDecompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzlib.c:842\n    #2 0x5555555f38bc in BZ2_bzRead /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzlib.c:1199\n    #3 0x5555555e16af in uncompressStream /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2.c:462\n    #4 0x5555555e3a05 in uncompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2.c:1472\n    #5 0x5555555e6f92 in main /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2.c:1984\n    #6 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #7 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #8 0x5555555df530 in _start (/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2+0x8b530)\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_1"
+              },
+              {
+                "command": [
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/regression/bzip2-SEC-ORIGINAL.input"
+                ],
+                "returncode": 1,
+                "signal": null,
+                "stdout": "",
+                "stderr": "decompress.c:302:24: runtime error: index 18002 out of bounds for type 'UChar [18002]'\n    #0 0x5555556199cf in BZ2_decompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/decompress.c:302\n    #1 0x5555555f05bf in BZ2_bzDecompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzlib.c:842\n    #2 0x5555555f38bc in BZ2_bzRead /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzlib.c:1199\n    #3 0x5555555e16af in uncompressStream /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2.c:462\n    #4 0x5555555e3a05 in uncompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2.c:1472\n    #5 0x5555555e6f92 in main /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2.c:1984\n    #6 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #7 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #8 0x5555555df530 in _start (/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2+0x8b530)\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_1"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "test_id": "SEC-ALTERNATE",
+        "input": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/regression/bzip2-SEC-ALTERNATE.input",
+        "validation": {
+          "status": "VULN_REMAINS",
+          "stability": {
+            "base": "STABLE",
+            "patched": "STABLE",
+            "overall": "STABLE"
+          },
+          "base": {
+            "matches_expected_error": true,
+            "results": [
+              {
+                "command": [
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/regression/bzip2-SEC-ALTERNATE.input"
+                ],
+                "returncode": 1,
+                "signal": null,
+                "stdout": "",
+                "stderr": "decompress.c:299:24: runtime error: index 18002 out of bounds for type 'UChar [18002]'\n    #0 0x5555556199bf in BZ2_decompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/decompress.c:299\n    #1 0x5555555f05bf in BZ2_bzDecompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzlib.c:842\n    #2 0x5555555f38bc in BZ2_bzRead /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzlib.c:1199\n    #3 0x5555555e16af in uncompressStream /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2.c:462\n    #4 0x5555555e3a05 in uncompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2.c:1472\n    #5 0x5555555e6f92 in main /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2.c:1984\n    #6 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #7 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #8 0x5555555df530 in _start (/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2+0x8b530)\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_1"
+              },
+              {
+                "command": [
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/regression/bzip2-SEC-ALTERNATE.input"
+                ],
+                "returncode": 1,
+                "signal": null,
+                "stdout": "",
+                "stderr": "decompress.c:299:24: runtime error: index 18002 out of bounds for type 'UChar [18002]'\n    #0 0x5555556199bf in BZ2_decompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/decompress.c:299\n    #1 0x5555555f05bf in BZ2_bzDecompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzlib.c:842\n    #2 0x5555555f38bc in BZ2_bzRead /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzlib.c:1199\n    #3 0x5555555e16af in uncompressStream /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2.c:462\n    #4 0x5555555e3a05 in uncompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2.c:1472\n    #5 0x5555555e6f92 in main /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2.c:1984\n    #6 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #7 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #8 0x5555555df530 in _start (/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2+0x8b530)\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_1"
+              },
+              {
+                "command": [
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/regression/bzip2-SEC-ALTERNATE.input"
+                ],
+                "returncode": 1,
+                "signal": null,
+                "stdout": "",
+                "stderr": "decompress.c:299:24: runtime error: index 18002 out of bounds for type 'UChar [18002]'\n    #0 0x5555556199bf in BZ2_decompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/decompress.c:299\n    #1 0x5555555f05bf in BZ2_bzDecompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzlib.c:842\n    #2 0x5555555f38bc in BZ2_bzRead /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzlib.c:1199\n    #3 0x5555555e16af in uncompressStream /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2.c:462\n    #4 0x5555555e3a05 in uncompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2.c:1472\n    #5 0x5555555e6f92 in main /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2.c:1984\n    #6 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #7 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #8 0x5555555df530 in _start (/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/base/asan_ubsan/source/bzip2+0x8b530)\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_1"
+              }
+            ]
+          },
+          "patched": {
+            "same_error_absent": false,
+            "expected_behavior": false,
+            "results": [
+              {
+                "command": [
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/regression/bzip2-SEC-ALTERNATE.input"
+                ],
+                "returncode": 1,
+                "signal": null,
+                "stdout": "",
+                "stderr": "decompress.c:302:24: runtime error: index 18002 out of bounds for type 'UChar [18002]'\n    #0 0x5555556199cf in BZ2_decompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/decompress.c:302\n    #1 0x5555555f05bf in BZ2_bzDecompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzlib.c:842\n    #2 0x5555555f38bc in BZ2_bzRead /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzlib.c:1199\n    #3 0x5555555e16af in uncompressStream /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2.c:462\n    #4 0x5555555e3a05 in uncompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2.c:1472\n    #5 0x5555555e6f92 in main /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2.c:1984\n    #6 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #7 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #8 0x5555555df530 in _start (/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2+0x8b530)\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_1"
+              },
+              {
+                "command": [
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/regression/bzip2-SEC-ALTERNATE.input"
+                ],
+                "returncode": 1,
+                "signal": null,
+                "stdout": "",
+                "stderr": "decompress.c:302:24: runtime error: index 18002 out of bounds for type 'UChar [18002]'\n    #0 0x5555556199cf in BZ2_decompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/decompress.c:302\n    #1 0x5555555f05bf in BZ2_bzDecompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzlib.c:842\n    #2 0x5555555f38bc in BZ2_bzRead /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzlib.c:1199\n    #3 0x5555555e16af in uncompressStream /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2.c:462\n    #4 0x5555555e3a05 in uncompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2.c:1472\n    #5 0x5555555e6f92 in main /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2.c:1984\n    #6 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #7 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #8 0x5555555df530 in _start (/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2+0x8b530)\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_1"
+              },
+              {
+                "command": [
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2",
+                  "-dc",
+                  "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reproducers/regression/bzip2-SEC-ALTERNATE.input"
+                ],
+                "returncode": 1,
+                "signal": null,
+                "stdout": "",
+                "stderr": "decompress.c:302:24: runtime error: index 18002 out of bounds for type 'UChar [18002]'\n    #0 0x5555556199cf in BZ2_decompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/decompress.c:302\n    #1 0x5555555f05bf in BZ2_bzDecompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzlib.c:842\n    #2 0x5555555f38bc in BZ2_bzRead /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzlib.c:1199\n    #3 0x5555555e16af in uncompressStream /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2.c:462\n    #4 0x5555555e3a05 in uncompress /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2.c:1472\n    #5 0x5555555e6f92 in main /project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2.c:1984\n    #6 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #7 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #8 0x5555555df530 in _start (/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution/spv-execution-3u0ahx1g/builds/patched/asan_ubsan/source/bzip2+0x8b530)\n\n",
+                "timed_out": false,
+                "error_type": "EXIT_CODE_1"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "diff_summary": {
+    "files_analyzed": 1,
+    "files_with_text_changes": 1,
+    "binary_files": 0,
+    "mode_changed_files": 0,
+    "hunks": 1,
+    "added_lines": 3,
+    "removed_lines": 0
+  },
+  "execution_summary": {
+    "status": "completed",
+    "builds": [
+      {
+        "version": "base",
+        "build_type": "release",
+        "status": "built",
+        "binary_sha256": "27be58a740402841dc2aee252561890c1108677b775f9cae7da8a1ce8ec0cf34",
+        "error": null
+      },
+      {
+        "version": "patched",
+        "build_type": "release",
+        "status": "built",
+        "binary_sha256": "5e65db969d2a87757fea106a6ec75bd28129a4521812c39a2d2ebef09b2388b0",
+        "error": null
+      },
+      {
+        "version": "base",
+        "build_type": "asan_ubsan",
+        "status": "built",
+        "binary_sha256": "c53e1aea0a819884926c1b05ed887ab7036f86c6f3722a08f738fb42dff44f06",
+        "error": null
+      },
+      {
+        "version": "patched",
+        "build_type": "asan_ubsan",
+        "status": "built",
+        "binary_sha256": "657fc1213d7d6c7436bc7eb804e0b7122ac6c471e5d0afadce879995b7e49d4b",
+        "error": null
+      }
+    ],
+    "executions": 72,
+    "skipped": 0
+  },
+  "artifacts": {
+    "workspace": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m",
+    "execution": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/execution.json",
+    "hardening": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/hardening.json",
+    "diff": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/diff.json",
+    "classification": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/classification.json",
+    "classifier_suite": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/classifier-suite.json",
+    "reference_verification": "/project/artifacts/bzip2-incomplete/spv-bzip2-incomplete-qxtqeg_m/reference-verification.json"
+  },
+  "limitations": [
+    "A FIXED result means the target issue was not observed in the configured tests; it does not prove global safety.",
+    "Hardening warnings describe the built binaries and do not by themselves prove exploitability.",
+    "The reference oracle is independent of the patched program's output, but it is limited to the configured tests."
+  ]
+}
