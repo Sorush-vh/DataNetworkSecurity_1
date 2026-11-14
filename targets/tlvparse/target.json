@@ -1,0 +1,241 @@
+{
+  "schema_version": "1.0",
+  "target_id": "tlvparse",
+  "name": "tlvparse",
+  "description": "A small binary TLV message parser with an unchecked NAME length (stack buffer overflow).",
+  "real_world": false,
+  "upstream": {
+    "project": "tlvparse",
+    "version": "1.0",
+    "url": "local",
+    "license": "educational"
+  },
+  "vulnerability": {
+    "id": "TLV-001",
+    "description": "parse_message copies a one-byte NAME length into a 32-byte stack buffer without a bound check.",
+    "signature": {
+      "error_type": "stack-buffer-overflow",
+      "file": "tlvparse.c",
+      "function": "parse_message"
+    }
+  },
+  "versions": {
+    "base": {
+      "source_dir": "versions/base",
+      "role": "vulnerable"
+    },
+    "correct": {
+      "source_dir": "versions/correct",
+      "role": "patched"
+    },
+    "incomplete": {
+      "source_dir": "versions/incomplete",
+      "role": "patched"
+    },
+    "regression": {
+      "source_dir": "versions/regression",
+      "role": "patched"
+    }
+  },
+  "execution": {
+    "build": {
+      "binary": "tlvparse",
+      "commands": [
+        [
+          "gcc",
+          "-std=c11",
+          "-Wall",
+          "-Wextra",
+          "{flags}",
+          "-fstack-protector-strong",
+          "-fPIE",
+          "-pie",
+          "-Wl,-z,relro,-z,now",
+          "tlvparse.c",
+          "-o",
+          "tlvparse"
+        ]
+      ],
+      "translation_units": [
+        "tlvparse.c"
+      ]
+    },
+    "limits": {
+      "build_timeout": 60,
+      "timeout": 5,
+      "max_output_bytes": 65536
+    },
+    "tests": [
+      {
+        "id": "FUN-VALID",
+        "category": "valid",
+        "input": {
+          "mode": "file",
+          "path": "inputs/valid.tlv",
+          "name": "valid.tlv"
+        },
+        "args": [
+          "{input}"
+        ],
+        "expected": {
+          "exit_code": 0,
+          "stdout": "name=alice-0123456789\nid=305419896\n"
+        },
+        "reference": "targets/tlvparse/reference-tests.json#FUN-VALID",
+        "classifier": {
+          "kind": "functional",
+          "validity": "valid",
+          "build_type": "release",
+          "reference": {
+            "exit_code": 0,
+            "stdout": "name=alice-0123456789\nid=305419896\n"
+          }
+        }
+      },
+      {
+        "id": "FUN-BOUNDARY",
+        "category": "boundary",
+        "input": {
+          "mode": "file",
+          "path": "inputs/boundary.tlv",
+          "name": "boundary.tlv"
+        },
+        "args": [
+          "{input}"
+        ],
+        "expected": {
+          "exit_code": 0,
+          "stdout": "name=abcdefghijklmnopqrstuvwxyz01234\nid=1\n"
+        },
+        "reference": "targets/tlvparse/reference-tests.json#FUN-BOUNDARY",
+        "classifier": {
+          "kind": "functional",
+          "validity": "valid",
+          "build_type": "release",
+          "reference": {
+            "exit_code": 0,
+            "stdout": "name=abcdefghijklmnopqrstuvwxyz01234\nid=1\n"
+          }
+        }
+      },
+      {
+        "id": "INV-TRUNCATED",
+        "category": "invalid",
+        "input": {
+          "mode": "file",
+          "path": "inputs/invalid-truncated.tlv",
+          "name": "invalid-truncated.tlv"
+        },
+        "args": [
+          "{input}"
+        ],
+        "expected": {
+          "exit_code": 2,
+          "stdout": ""
+        },
+        "reference": "targets/tlvparse/reference-tests.json#INV-TRUNCATED"
+      },
+      {
+        "id": "INV-TYPE",
+        "category": "invalid",
+        "input": {
+          "mode": "file",
+          "path": "inputs/invalid-type.tlv",
+          "name": "invalid-type.tlv"
+        },
+        "args": [
+          "{input}"
+        ],
+        "expected": {
+          "exit_code": 2,
+          "stdout": ""
+        },
+        "reference": "targets/tlvparse/reference-tests.json#INV-TYPE"
+      },
+      {
+        "id": "SEC-ORIGINAL",
+        "category": "invalid",
+        "input": {
+          "mode": "file",
+          "path": "inputs/overflow-200.tlv",
+          "name": "overflow-200.tlv"
+        },
+        "args": [
+          "{input}"
+        ],
+        "expected": {
+          "exit_code": 2,
+          "stdout": ""
+        },
+        "reference": "targets/tlvparse/reference-tests.json#SEC-ORIGINAL",
+        "classifier": {
+          "kind": "security",
+          "build_type": "asan_ubsan",
+          "expected_patched": {
+            "exit_code": 2,
+            "stdout": ""
+          },
+          "role": "original"
+        }
+      },
+      {
+        "id": "SEC-ALTERNATE",
+        "category": "invalid",
+        "input": {
+          "mode": "file",
+          "path": "inputs/overflow-64.tlv",
+          "name": "overflow-64.tlv"
+        },
+        "args": [
+          "{input}"
+        ],
+        "expected": {
+          "exit_code": 2,
+          "stdout": ""
+        },
+        "reference": "targets/tlvparse/reference-tests.json#SEC-ALTERNATE",
+        "classifier": {
+          "kind": "security",
+          "build_type": "asan_ubsan",
+          "expected_patched": {
+            "exit_code": 2,
+            "stdout": ""
+          },
+          "role": "alternate"
+        }
+      }
+    ]
+  },
+  "hardening": {
+    "required": {
+      "relro": "full",
+      "pie": "enabled",
+      "nx": "enabled",
+      "stack_canary": "present"
+    }
+  },
+  "scenarios": {
+    "correct": {
+      "patched_version": "correct",
+      "expected_exit_code": 0,
+      "expected_statuses": [
+        "FIXED"
+      ]
+    },
+    "incomplete": {
+      "patched_version": "incomplete",
+      "expected_exit_code": 10,
+      "expected_statuses": [
+        "INCOMPLETE_FIX"
+      ]
+    },
+    "regression": {
+      "patched_version": "regression",
+      "expected_exit_code": 20,
+      "expected_statuses": [
+        "FUNCTIONAL_REGRESSION"
+      ]
+    }
+  },
+  "reference_tests": "reference-tests.json"
+}
