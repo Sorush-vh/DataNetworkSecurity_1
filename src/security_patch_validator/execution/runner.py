@@ -284,7 +284,7 @@ def _run_case(config: Config, case: TestCase, build: dict, work: Path) -> dict[s
     return result
 
 
-def _run_matrix(config: Config, work: Path, *, retained: bool) -> dict[str, Any]:
+def _run_matrix(config: Config, work: Path, *, retained: bool, repetitions: int = 1) -> dict[str, Any]:
     if any(work.is_relative_to(version.source_dir) for version in config.versions.values()):
         raise ValueError("The artifact workspace must be outside both target source trees.")
     snapshots = {}
@@ -305,7 +305,8 @@ def _run_matrix(config: Config, work: Path, *, retained: bool) -> dict[str, Any]
         for case in config.tests:
             for build in pair:
                 if build["status"] == "built":
-                    executions.append(_run_case(config, case, build, work))
+                    for _ in range(repetitions):
+                        executions.append(_run_case(config, case, build, work))
                 else:
                     skipped.append({"test_id": case.test_id, "version": build["version"],
                                     "build_type": build_type, "reason": "build_failed"})
@@ -318,6 +319,7 @@ def _run_matrix(config: Config, work: Path, *, retained: bool) -> dict[str, Any]
     return {
         "schema_version": "1.0", "analysis_type": "dynamic_execution",
         "target_id": config.target_id, "status": status,
+        "repetitions": repetitions,
         "artifacts_retained": retained, "artifact_workspace": str(work) if retained else None,
         "builds": list(builds.values()),
         "tests": [{"test_id": case.test_id, "category": case.category, "reference": case.reference,
@@ -326,8 +328,16 @@ def _run_matrix(config: Config, work: Path, *, retained: bool) -> dict[str, Any]
     }
 
 
-def run_suite(config: Config, *, artifacts_dir: str | Path | None = None) -> dict[str, Any]:
-    """Build and run one observation per (build type, case, version)."""
+def run_suite(config: Config, *, artifacts_dir: str | Path | None = None,
+              repetitions: int = 1) -> dict[str, Any]:
+    """Build and run one observation per (build type, case, version).
+
+    ``repetitions`` repeats every observation without rebuilding.  The default
+    of one preserves the original single-observation contract; the classifier
+    integration uses at least three repetitions.
+    """
+    if type(repetitions) is not int or repetitions < 1:
+        raise ValueError("repetitions must be a positive integer.")
     if platform.system() != "Linux" or platform.machine() != "x86_64":
         raise ValueError("Dynamic execution requires Linux x86_64.")
     if artifacts_dir is not None:
@@ -336,6 +346,6 @@ def run_suite(config: Config, *, artifacts_dir: str | Path | None = None) -> dic
             raise ValueError("The artifact directory must be outside both target source trees.")
         parent.mkdir(parents=True, exist_ok=True)
         work = Path(tempfile.mkdtemp(prefix="spv-execution-", dir=parent))
-        return _run_matrix(config, work, retained=True)
+        return _run_matrix(config, work, retained=True, repetitions=repetitions)
     with tempfile.TemporaryDirectory(prefix="spv-execution-") as temporary:
-        return _run_matrix(config, Path(temporary).resolve(), retained=False)
+        return _run_matrix(config, Path(temporary).resolve(), retained=False, repetitions=repetitions)
