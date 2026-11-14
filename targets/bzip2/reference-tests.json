@@ -1,0 +1,111 @@
+{
+  "schema_version": "1.0",
+  "target_id": "bzip2",
+  "oracle_source": "bzip2 manual (bzip2.1) and the upstream 1.0.8 fix for CVE-2019-12900",
+  "notes": [
+    "A valid stream must decompress to the original bytes and exit 0.",
+    "A corrupt stream must be rejected with exit code 2 and no output.",
+    "The selector-overflow inputs must produce an out-of-bounds diagnostic in BZ2_decompress on the base version.",
+    "The correct patch must reject both selector-overflow inputs without a sanitizer finding.",
+    "The incomplete patch blocks the original selector count but not the alternate count.",
+    "The regression patch fixes the overflow but rejects valid block-size-9 streams."
+  ],
+  "tests": [
+    {
+      "id": "FUN-VALID-9",
+      "kind": "functional",
+      "description": "Decompress a valid block-size-9 stream.",
+      "input": "inputs/valid-block9.bz2",
+      "expected": {
+        "exit_code": 0,
+        "stdout": "security patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\n"
+      },
+      "expected_by_version": {
+        "base": "pass",
+        "correct": "pass",
+        "incomplete": "pass",
+        "regression": "fail"
+      }
+    },
+    {
+      "id": "FUN-VALID-1",
+      "kind": "functional",
+      "description": "Decompress a valid block-size-1 stream.",
+      "input": "inputs/valid-block1.bz2",
+      "expected": {
+        "exit_code": 0,
+        "stdout": "security patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\n"
+      },
+      "expected_by_version": {
+        "base": "pass",
+        "correct": "pass",
+        "incomplete": "pass",
+        "regression": "pass"
+      }
+    },
+    {
+      "id": "INV-MAGIC",
+      "kind": "invalid",
+      "description": "Reject a file with an invalid bzip2 magic header.",
+      "input": "inputs/invalid-magic.bz2",
+      "expected": {
+        "exit_code": 2,
+        "stdout": ""
+      },
+      "expected_by_version": {
+        "base": "pass",
+        "correct": "pass",
+        "incomplete": "pass",
+        "regression": "pass"
+      }
+    },
+    {
+      "id": "INV-TRUNCATED",
+      "kind": "invalid",
+      "description": "Reject a truncated valid stream.",
+      "input": "inputs/truncated.bz2",
+      "expected": {
+        "exit_code": 2,
+        "stdout": ""
+      },
+      "expected_by_version": {
+        "base": "pass",
+        "correct": "pass",
+        "incomplete": "pass",
+        "regression": "pass"
+      }
+    },
+    {
+      "id": "SEC-ORIGINAL",
+      "kind": "security",
+      "description": "Original CVE-2019-12900 reproducer with 32767 selectors.",
+      "input": "inputs/selector-overflow.bz2",
+      "expected": {
+        "exit_code": 2,
+        "stdout": ""
+      },
+      "expected_by_version": {
+        "base": "vulnerable",
+        "correct": "fixed",
+        "incomplete": "fixed",
+        "regression": "fixed"
+      }
+    },
+    {
+      "id": "SEC-ALTERNATE",
+      "kind": "security",
+      "description": "Alternate reproducer with 32766 selectors; the incomplete patch does not block it.",
+      "input": "inputs/selector-overflow-alt.bz2",
+      "expected": {
+        "exit_code": 2,
+        "stdout": ""
+      },
+      "expected_by_version": {
+        "base": "vulnerable",
+        "correct": "fixed",
+        "incomplete": "vulnerable",
+        "regression": "fixed"
+      }
+    }
+  ]
+}

@@ -1,0 +1,244 @@
+{
+  "schema_version": "1.0",
+  "target_id": "bzip2",
+  "name": "bzip2 1.0.6",
+  "description": "Real-world bzip2 1.0.6 decompressor with CVE-2019-12900 (selectorMtf out-of-bounds write).",
+  "real_world": true,
+  "upstream": {
+    "project": "bzip2",
+    "version": "1.0.6",
+    "url": "https://sourceware.org/bzip2/",
+    "license": "BSD-like"
+  },
+  "vulnerability": {
+    "id": "CVE-2019-12900",
+    "description": "BZ2_decompress reads a 15-bit selector count and writes that many entries into a fixed-size selectorMtf array.",
+    "signature": {
+      "error_type": "out-of-bounds",
+      "file": "decompress.c",
+      "function": "BZ2_decompress"
+    }
+  },
+  "versions": {
+    "base": {
+      "source_dir": "versions/base",
+      "role": "vulnerable"
+    },
+    "correct": {
+      "source_dir": "versions/correct",
+      "role": "patched"
+    },
+    "incomplete": {
+      "source_dir": "versions/incomplete",
+      "role": "patched"
+    },
+    "regression": {
+      "source_dir": "versions/regression",
+      "role": "patched"
+    }
+  },
+  "execution": {
+    "build": {
+      "binary": "bzip2",
+      "commands": [
+        [
+          "sh",
+          "build.sh"
+        ]
+      ],
+      "translation_units": [
+        "bzip2.c",
+        "blocksort.c",
+        "huffman.c",
+        "crctable.c",
+        "randtable.c",
+        "compress.c",
+        "decompress.c",
+        "bzlib.c"
+      ]
+    },
+    "limits": {
+      "build_timeout": 120,
+      "timeout": 10,
+      "max_output_bytes": 1048576
+    },
+    "tests": [
+      {
+        "id": "FUN-VALID-9",
+        "category": "valid",
+        "input": {
+          "mode": "file",
+          "path": "inputs/valid-block9.bz2",
+          "name": "valid-block9.bz2"
+        },
+        "args": [
+          "-dc",
+          "{input}"
+        ],
+        "expected": {
+          "exit_code": 0,
+          "stdout": "security patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\n"
+        },
+        "reference": "targets/bzip2/reference-tests.json#FUN-VALID-9",
+        "classifier": {
+          "kind": "functional",
+          "validity": "valid",
+          "build_type": "release",
+          "reference": {
+            "exit_code": 0,
+            "stdout": "security patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\n"
+          }
+        }
+      },
+      {
+        "id": "FUN-VALID-1",
+        "category": "boundary",
+        "input": {
+          "mode": "file",
+          "path": "inputs/valid-block1.bz2",
+          "name": "valid-block1.bz2"
+        },
+        "args": [
+          "-dc",
+          "{input}"
+        ],
+        "expected": {
+          "exit_code": 0,
+          "stdout": "security patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\n"
+        },
+        "reference": "targets/bzip2/reference-tests.json#FUN-VALID-1",
+        "classifier": {
+          "kind": "functional",
+          "validity": "valid",
+          "build_type": "release",
+          "reference": {
+            "exit_code": 0,
+            "stdout": "security patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\nsecurity patch validation target\n"
+          }
+        }
+      },
+      {
+        "id": "INV-MAGIC",
+        "category": "invalid",
+        "input": {
+          "mode": "file",
+          "path": "inputs/invalid-magic.bz2",
+          "name": "invalid-magic.bz2"
+        },
+        "args": [
+          "-dc",
+          "{input}"
+        ],
+        "expected": {
+          "exit_code": 2,
+          "stdout": ""
+        },
+        "reference": "targets/bzip2/reference-tests.json#INV-MAGIC"
+      },
+      {
+        "id": "INV-TRUNCATED",
+        "category": "invalid",
+        "input": {
+          "mode": "file",
+          "path": "inputs/truncated.bz2",
+          "name": "truncated.bz2"
+        },
+        "args": [
+          "-dc",
+          "{input}"
+        ],
+        "expected": {
+          "exit_code": 2,
+          "stdout": ""
+        },
+        "reference": "targets/bzip2/reference-tests.json#INV-TRUNCATED"
+      },
+      {
+        "id": "SEC-ORIGINAL",
+        "category": "invalid",
+        "input": {
+          "mode": "file",
+          "path": "inputs/selector-overflow.bz2",
+          "name": "selector-overflow.bz2"
+        },
+        "args": [
+          "-dc",
+          "{input}"
+        ],
+        "expected": {
+          "exit_code": 2,
+          "stdout": ""
+        },
+        "reference": "targets/bzip2/reference-tests.json#SEC-ORIGINAL",
+        "classifier": {
+          "kind": "security",
+          "build_type": "asan_ubsan",
+          "expected_patched": {
+            "exit_code": 2,
+            "stdout": ""
+          },
+          "role": "original"
+        }
+      },
+      {
+        "id": "SEC-ALTERNATE",
+        "category": "invalid",
+        "input": {
+          "mode": "file",
+          "path": "inputs/selector-overflow-alt.bz2",
+          "name": "selector-overflow-alt.bz2"
+        },
+        "args": [
+          "-dc",
+          "{input}"
+        ],
+        "expected": {
+          "exit_code": 2,
+          "stdout": ""
+        },
+        "reference": "targets/bzip2/reference-tests.json#SEC-ALTERNATE",
+        "classifier": {
+          "kind": "security",
+          "build_type": "asan_ubsan",
+          "expected_patched": {
+            "exit_code": 2,
+            "stdout": ""
+          },
+          "role": "alternate"
+        }
+      }
+    ]
+  },
+  "hardening": {
+    "required": {
+      "relro": "full",
+      "pie": "enabled",
+      "nx": "enabled",
+      "stack_canary": "present"
+    }
+  },
+  "scenarios": {
+    "correct": {
+      "patched_version": "correct",
+      "expected_exit_code": 0,
+      "expected_statuses": [
+        "FIXED"
+      ]
+    },
+    "incomplete": {
+      "patched_version": "incomplete",
+      "expected_exit_code": 10,
+      "expected_statuses": [
+        "INCOMPLETE_FIX"
+      ]
+    },
+    "regression": {
+      "patched_version": "regression",
+      "expected_exit_code": 20,
+      "expected_statuses": [
+        "FUNCTIONAL_REGRESSION"
+      ]
+    }
+  },
+  "reference_tests": "reference-tests.json"
+}
