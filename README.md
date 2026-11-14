@@ -129,14 +129,17 @@ The repository follows a modular architecture:
   - `common/` – Shared models and utilities.
   - `patch_analysis/` – Version comparison, Diff analysis, stack trace parsing, correlation, and classification.
   - `execution/` – Dynamic execution and error detection.
-  - `reproducibility/` – Reproducer Bundles and testcase minimization.
-  - `hardening/` – ELF security property inspection.
+  - `reproducibility/` – Reproducer Bundles and testcase minimization (implemented under `member3/`).
+  - `hardening/` – ELF security property inspection and comparison.
+  - `targets/` – Target manifests, deterministic Git snapshots, and the scenario orchestrator.
   - `reporting/` – JSON and human-readable reports.
-- `configs/` – Target program configurations.
+- `configs/` – Target program configurations generated from the manifests.
 - `schemas/` – JSON input and output schemas.
-- `targets/` – Target C/C++ applications and their versions.
+- `targets/` – Target C/C++ applications and their four versions.
 - `tests/` – Unit and integration tests.
-- `pipeline/` – CI/CD configurations.
+- `regression/` – Persistent minimized regression inputs and manifests.
+- `pipeline/` – CI/CD configurations (the active workflows are in `.github/workflows/`).
+- `docker/` – Isolated Linux x86_64 build/test image.
 - `reports/` – Validation reports and experimental results.
 - `docs/` – Technical documentation and architecture descriptions.
 
@@ -152,6 +155,50 @@ The project uses a shared Git repository and a feature-branch workflow.
 - `feature/person4-targets` – Target programs and binary hardening.
 
 Each contributor develops their assigned module independently and submits changes through Pull Requests.
+
+## Target applications and binary hardening
+
+Module 4 provides two independent C targets, each with four deliberately
+designed versions, an independent reference oracle, ELF hardening inspection,
+and an end-to-end scenario orchestrator.
+
+| Target | Real-world | Vulnerability | Input |
+|---|---|---|---|
+| `bzip2` 1.0.6 | yes | CVE-2019-12900, `out-of-bounds` in `BZ2_decompress` | `.bz2` file |
+| `tlvparse` | no (second target) | unchecked TLV length, `stack-buffer-overflow` | binary file |
+
+Each target has `base`, `correct`, `incomplete`, and `regression` source trees
+under `targets/<id>/versions/`, a `target.json` manifest, and a
+`reference-tests.json` oracle. The execution configs are generated from the
+manifests and checked in under `configs/<id>/`.
+
+~~~bash
+# Validate the manifest and the four source trees.
+PYTHONPATH=src python3 -m security_patch_validator.cli targets validate \
+  --target targets/bzip2/target.json --pretty
+
+# Run one scenario end to end (build, execute, harden, diff, classify, reproduce).
+PYTHONPATH=src python3 -m security_patch_validator.cli targets run \
+  --target targets/tlvparse/target.json --scenario incomplete \
+  --artifacts-dir artifacts/tlvparse-incomplete \
+  --output reports/tlvparse-incomplete.json --pretty
+
+# Run all three scenarios and check exit codes 0, 10 and 20.
+PYTHONPATH=src python3 -m security_patch_validator.cli targets run-all \
+  --target targets/tlvparse/target.json --artifacts-dir artifacts/tlvparse \
+  --output reports/tlvparse-matrix.json --pretty
+
+# Inspect hardening directly.
+PYTHONPATH=src python3 -m security_patch_validator.cli hardening \
+  --binary artifacts/.../builds/base/release/source/bzip2 \
+  --require relro=full --require pie=enabled --require nx=enabled \
+  --require stack_canary=present --pretty
+~~~
+
+See [the targets guide](docs/targets.md) for the manifest schema, the
+deterministic Git snapshot design, the hardening evidence, and the isolation
+commands. The observed end-to-end results are recorded in
+[the verification log](docs/verification.md).
 
 ## Dynamic execution
 
@@ -178,9 +225,19 @@ All experiments must be performed in an isolated environment and on authorized t
 
 ## Project Status
 
-**Currently under development.**
+Module 1 (patch analysis and classification), Module 2 (dynamic execution),
+Module 3 (reproducibility, minimization and regression testing), and Module 4
+(target applications and ELF hardening) are implemented. The two-target
+four-scenario matrix passes with the expected exit codes:
 
-The framework is being developed incrementally by four contributors. Module integration, target selection, testing, and final validation will be completed throughout the project.
+| Target | Correct | Incomplete | Regression |
+|---|---:|---:|---:|
+| `tlvparse` | 0 | 10 | 20 |
+| `bzip2` | 0 | 10 | 20 |
+
+The end-to-end commands and observed evidence are in
+[docs/verification.md](docs/verification.md). Unseen patches can be evaluated
+with `spv targets run --patched-dir ...` without editing the manifest.
 
 ## Authors
 

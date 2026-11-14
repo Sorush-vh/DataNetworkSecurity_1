@@ -1,0 +1,110 @@
+{
+  "schema_version": "1.0",
+  "target_id": "tlvparse",
+  "oracle_source": "The TLV wire format and the documented output format in targets/tlvparse/README.md",
+  "notes": [
+    "A valid message prints name and id and exits 0.",
+    "A truncated or unknown record is rejected with exit code 2 and no output.",
+    "A NAME longer than 31 bytes must be rejected by a correct patch.",
+    "The incomplete patch rejects only lengths above 128, so a 64-byte NAME still overflows.",
+    "The regression patch rejects valid names longer than 8 bytes."
+  ],
+  "tests": [
+    {
+      "id": "FUN-VALID",
+      "kind": "functional",
+      "description": "Parse a valid 16-byte NAME and a 32-bit ID.",
+      "input": "inputs/valid.tlv",
+      "expected": {
+        "exit_code": 0,
+        "stdout": "name=alice-0123456789\nid=305419896\n"
+      },
+      "expected_by_version": {
+        "base": "pass",
+        "correct": "pass",
+        "incomplete": "pass",
+        "regression": "fail"
+      }
+    },
+    {
+      "id": "FUN-BOUNDARY",
+      "kind": "functional",
+      "description": "Parse the maximum valid 31-byte NAME.",
+      "input": "inputs/boundary.tlv",
+      "expected": {
+        "exit_code": 0,
+        "stdout": "name=abcdefghijklmnopqrstuvwxyz01234\nid=1\n"
+      },
+      "expected_by_version": {
+        "base": "pass",
+        "correct": "pass",
+        "incomplete": "pass",
+        "regression": "fail"
+      }
+    },
+    {
+      "id": "INV-TRUNCATED",
+      "kind": "invalid",
+      "description": "Reject a record whose declared length exceeds the remaining input.",
+      "input": "inputs/invalid-truncated.tlv",
+      "expected": {
+        "exit_code": 2,
+        "stdout": ""
+      },
+      "expected_by_version": {
+        "base": "pass",
+        "correct": "pass",
+        "incomplete": "pass",
+        "regression": "pass"
+      }
+    },
+    {
+      "id": "INV-TYPE",
+      "kind": "invalid",
+      "description": "Reject an unknown record type.",
+      "input": "inputs/invalid-type.tlv",
+      "expected": {
+        "exit_code": 2,
+        "stdout": ""
+      },
+      "expected_by_version": {
+        "base": "pass",
+        "correct": "pass",
+        "incomplete": "pass",
+        "regression": "pass"
+      }
+    },
+    {
+      "id": "SEC-ORIGINAL",
+      "kind": "security",
+      "description": "Original 200-byte NAME overflow.",
+      "input": "inputs/overflow-200.tlv",
+      "expected": {
+        "exit_code": 2,
+        "stdout": ""
+      },
+      "expected_by_version": {
+        "base": "vulnerable",
+        "correct": "fixed",
+        "incomplete": "fixed",
+        "regression": "fixed"
+      }
+    },
+    {
+      "id": "SEC-ALTERNATE",
+      "kind": "security",
+      "description": "Alternate 64-byte NAME overflow; the incomplete patch does not block it.",
+      "input": "inputs/overflow-64.tlv",
+      "expected": {
+        "exit_code": 2,
+        "stdout": ""
+      },
+      "expected_by_version": {
+        "base": "vulnerable",
+        "correct": "fixed",
+        "incomplete": "vulnerable",
+        "regression": "fixed"
+      }
+    }
+  ]
+}

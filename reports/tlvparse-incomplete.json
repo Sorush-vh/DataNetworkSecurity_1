@@ -1,0 +1,1146 @@
+{
+  "schema_version": "1.0",
+  "analysis_type": "target_scenario_evaluation",
+  "target_id": "tlvparse",
+  "target_name": "tlvparse",
+  "scenario": "incomplete",
+  "patched_version": "incomplete",
+  "expected_exit_code": 10,
+  "expected_statuses": [
+    "INCOMPLETE_FIX"
+  ],
+  "observed_exit_code": 10,
+  "matches_expected_exit_code": true,
+  "classification": {
+    "schema_version": "1.0",
+    "analysis_type": "patch_classification",
+    "target_id": "tlvparse",
+    "target_issue_id": "TLV-001",
+    "statuses": [
+      "INCOMPLETE_FIX"
+    ],
+    "security_status": "INCOMPLETE_FIX",
+    "functional_status": "PASS",
+    "new_issues": [],
+    "tests": [
+      {
+        "test_id": "FUN-VALID",
+        "kind": "functional",
+        "build_type": "release",
+        "replays": {
+          "base": 3,
+          "patched": 3
+        },
+        "sufficient_replays": true,
+        "findings": [],
+        "status": "PASS",
+        "base_matches_reference": true,
+        "patched_matches_reference": true
+      },
+      {
+        "test_id": "FUN-BOUNDARY",
+        "kind": "functional",
+        "build_type": "release",
+        "replays": {
+          "base": 3,
+          "patched": 3
+        },
+        "sufficient_replays": true,
+        "findings": [],
+        "status": "PASS",
+        "base_matches_reference": true,
+        "patched_matches_reference": true
+      },
+      {
+        "test_id": "SEC-ORIGINAL",
+        "kind": "security",
+        "build_type": "asan_ubsan",
+        "replays": {
+          "base": 3,
+          "patched": 3
+        },
+        "sufficient_replays": true,
+        "findings": [
+          {
+            "version": "base",
+            "replay": 1,
+            "diagnostics": [
+              {
+                "error_type": "stack-buffer-overflow",
+                "detection_mechanism": "asan",
+                "matches_target": true,
+                "location": {
+                  "file": "../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc",
+                  "line": 827,
+                  "column": null
+                }
+              }
+            ]
+          },
+          {
+            "version": "base",
+            "replay": 2,
+            "diagnostics": [
+              {
+                "error_type": "stack-buffer-overflow",
+                "detection_mechanism": "asan",
+                "matches_target": true,
+                "location": {
+                  "file": "../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc",
+                  "line": 827,
+                  "column": null
+                }
+              }
+            ]
+          },
+          {
+            "version": "base",
+            "replay": 3,
+            "diagnostics": [
+              {
+                "error_type": "stack-buffer-overflow",
+                "detection_mechanism": "asan",
+                "matches_target": true,
+                "location": {
+                  "file": "../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc",
+                  "line": 827,
+                  "column": null
+                }
+              }
+            ]
+          }
+        ],
+        "correlations": {
+          "base": {
+            "summary": {
+              "findings": 1,
+              "changed_line_overlaps": 0,
+              "file_only_overlaps": 1,
+              "unresolved": 0
+            },
+            "findings": [
+              {
+                "finding_index": 0,
+                "detection_mechanism": "asan",
+                "error_type": "stack-buffer-overflow",
+                "correlation_status": "file_overlap_only",
+                "evidence_strength": "weak",
+                "matches": [
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c",
+                    "repository_path": "tlvparse.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 39,
+                    "source": "primary_stack_frame",
+                    "frame_index": 1,
+                    "function": "parse_message",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  },
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c",
+                    "repository_path": "tlvparse.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 61,
+                    "source": "primary_stack_frame",
+                    "frame_index": 0,
+                    "function": "main",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  },
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c",
+                    "repository_path": "tlvparse.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 77,
+                    "source": "primary_stack_frame",
+                    "frame_index": 2,
+                    "function": "main",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  }
+                ],
+                "path_warnings": [],
+                "related_stacks_excluded": true
+              }
+            ]
+          }
+        },
+        "role": "original",
+        "base_target_reproduced": true,
+        "patched_target_reproduced": false,
+        "patched_expected_behavior": true,
+        "stable_target_observation": true
+      },
+      {
+        "test_id": "SEC-ALTERNATE",
+        "kind": "security",
+        "build_type": "asan_ubsan",
+        "replays": {
+          "base": 3,
+          "patched": 3
+        },
+        "sufficient_replays": true,
+        "findings": [
+          {
+            "version": "base",
+            "replay": 1,
+            "diagnostics": [
+              {
+                "error_type": "stack-buffer-overflow",
+                "detection_mechanism": "asan",
+                "matches_target": true,
+                "location": {
+                  "file": "../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc",
+                  "line": 827,
+                  "column": null
+                }
+              }
+            ]
+          },
+          {
+            "version": "base",
+            "replay": 2,
+            "diagnostics": [
+              {
+                "error_type": "stack-buffer-overflow",
+                "detection_mechanism": "asan",
+                "matches_target": true,
+                "location": {
+                  "file": "../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc",
+                  "line": 827,
+                  "column": null
+                }
+              }
+            ]
+          },
+          {
+            "version": "base",
+            "replay": 3,
+            "diagnostics": [
+              {
+                "error_type": "stack-buffer-overflow",
+                "detection_mechanism": "asan",
+                "matches_target": true,
+                "location": {
+                  "file": "../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc",
+                  "line": 827,
+                  "column": null
+                }
+              }
+            ]
+          },
+          {
+            "version": "patched",
+            "replay": 1,
+            "diagnostics": [
+              {
+                "error_type": "stack-buffer-overflow",
+                "detection_mechanism": "asan",
+                "matches_target": true,
+                "location": {
+                  "file": "../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc",
+                  "line": 827,
+                  "column": null
+                }
+              }
+            ]
+          },
+          {
+            "version": "patched",
+            "replay": 2,
+            "diagnostics": [
+              {
+                "error_type": "stack-buffer-overflow",
+                "detection_mechanism": "asan",
+                "matches_target": true,
+                "location": {
+                  "file": "../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc",
+                  "line": 827,
+                  "column": null
+                }
+              }
+            ]
+          },
+          {
+            "version": "patched",
+            "replay": 3,
+            "diagnostics": [
+              {
+                "error_type": "stack-buffer-overflow",
+                "detection_mechanism": "asan",
+                "matches_target": true,
+                "location": {
+                  "file": "../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc",
+                  "line": 827,
+                  "column": null
+                }
+              }
+            ]
+          }
+        ],
+        "correlations": {
+          "base": {
+            "summary": {
+              "findings": 1,
+              "changed_line_overlaps": 0,
+              "file_only_overlaps": 1,
+              "unresolved": 0
+            },
+            "findings": [
+              {
+                "finding_index": 0,
+                "detection_mechanism": "asan",
+                "error_type": "stack-buffer-overflow",
+                "correlation_status": "file_overlap_only",
+                "evidence_strength": "weak",
+                "matches": [
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c",
+                    "repository_path": "tlvparse.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 39,
+                    "source": "primary_stack_frame",
+                    "frame_index": 1,
+                    "function": "parse_message",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  },
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c",
+                    "repository_path": "tlvparse.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 61,
+                    "source": "primary_stack_frame",
+                    "frame_index": 0,
+                    "function": "main",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  },
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c",
+                    "repository_path": "tlvparse.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 77,
+                    "source": "primary_stack_frame",
+                    "frame_index": 2,
+                    "function": "main",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  }
+                ],
+                "path_warnings": [],
+                "related_stacks_excluded": true
+              }
+            ]
+          },
+          "patched": {
+            "summary": {
+              "findings": 1,
+              "changed_line_overlaps": 0,
+              "file_only_overlaps": 1,
+              "unresolved": 0
+            },
+            "findings": [
+              {
+                "finding_index": 0,
+                "detection_mechanism": "asan",
+                "error_type": "stack-buffer-overflow",
+                "correlation_status": "file_overlap_only",
+                "evidence_strength": "weak",
+                "matches": [
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c",
+                    "repository_path": "tlvparse.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 43,
+                    "source": "primary_stack_frame",
+                    "frame_index": 1,
+                    "function": "parse_message",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  },
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c",
+                    "repository_path": "tlvparse.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 65,
+                    "source": "primary_stack_frame",
+                    "frame_index": 0,
+                    "function": "main",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  },
+                  {
+                    "relation": "same_file_only",
+                    "strength": "weak",
+                    "reported_path": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c",
+                    "repository_path": "tlvparse.c",
+                    "path_match_method": "configured_source_root",
+                    "reported_line": 81,
+                    "source": "primary_stack_frame",
+                    "frame_index": 2,
+                    "function": "main",
+                    "diff_hunk_indices": [],
+                    "reason": "The file changed, but this source line did not; causal link is unproven."
+                  }
+                ],
+                "path_warnings": [],
+                "related_stacks_excluded": true
+              }
+            ]
+          }
+        },
+        "role": "alternate",
+        "base_target_reproduced": true,
+        "patched_target_reproduced": true,
+        "patched_expected_behavior": false,
+        "stable_target_observation": true
+      }
+    ],
+    "complete": true,
+    "inconclusive_reasons": [],
+    "suggested_exit_code": 10,
+    "exit_code_policy": "40 > 20 > 10 > 30 > 0; tool configuration errors are handled by CLI/integration layer.",
+    "limitations": [
+      "FIXED means not observed in the configured tests; it does not prove the absence of all vulnerabilities.",
+      "Newly observed sanitizer findings are not automatically caused by the patch.",
+      "The target issue signature and independent functional oracles must be approved outside the classifier.",
+      "Completion attestations are supplied by other modules and are not independently verified here."
+    ]
+  },
+  "hardening": {
+    "schema_version": "1.0",
+    "analysis_type": "target_hardening",
+    "reports": {
+      "base": {
+        "schema_version": "1.0",
+        "analysis_type": "elf_hardening",
+        "binary": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/release/source/tlvparse",
+        "binary_sha256": "305a600392797ab0d474c1d11e81cd1906ff0202fcbf78f4136826137d46f4db",
+        "elf": {
+          "class": "ELF64",
+          "data": "2's complement, little endian",
+          "type": "DYN (Position-Independent Executable file)",
+          "machine": "Advanced Micro Devices X86-64"
+        },
+        "protections": {
+          "relro": {
+            "status": "full",
+            "reason": "GNU_RELRO is present and the dynamic section requests immediate binding (BIND_NOW/NOW).",
+            "evidence": {
+              "gnu_relro_segment": true,
+              "bind_now": true,
+              "dynamic_flags": [
+                "BIND_NOW",
+                "NOW",
+                "PIE"
+              ]
+            }
+          },
+          "pie": {
+            "status": "enabled",
+            "reason": "The ELF is ET_DYN and contains an interpreter, which is the PIE executable layout.",
+            "evidence": {
+              "elf_type": "DYN (Position-Independent Executable file)",
+              "has_interp": true,
+              "pie_dynamic_flag": true
+            }
+          },
+          "nx": {
+            "status": "enabled",
+            "reason": "The GNU_STACK segment is not marked executable.",
+            "evidence": {
+              "gnu_stack_flags": "RW"
+            }
+          },
+          "stack_canary": {
+            "status": "present",
+            "reason": "The binary references the stack-protector runtime symbol.",
+            "evidence": {
+              "symbols": [
+                "__stack_chk_fail"
+              ],
+              "canary_instruction_count": 2
+            }
+          }
+        },
+        "evidence": {
+          "commands": [
+            [
+              "readelf",
+              "-hW",
+              "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/release/source/tlvparse"
+            ],
+            [
+              "readelf",
+              "-lW",
+              "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/release/source/tlvparse"
+            ],
+            [
+              "readelf",
+              "-dW",
+              "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/release/source/tlvparse"
+            ],
+            [
+              "readelf",
+              "-sW",
+              "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/release/source/tlvparse"
+            ],
+            [
+              "objdump",
+              "-d",
+              "--no-show-raw-insn",
+              "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/release/source/tlvparse"
+            ]
+          ],
+          "program_headers": {
+            "has_gnu_relro": true,
+            "has_interp": true,
+            "gnu_stack_flags": "RW",
+            "load_segments": 4
+          },
+          "dynamic": {
+            "bind_now": true,
+            "pie_flag": true,
+            "flags": [
+              "BIND_NOW",
+              "NOW",
+              "PIE"
+            ]
+          },
+          "symbols": {
+            "stack_canary_symbols": [
+              "__stack_chk_fail"
+            ],
+            "has_stack_canary_symbol": true
+          },
+          "disassembly": {
+            "canary_instruction_count": 2,
+            "has_canary_instruction": true
+          }
+        },
+        "limitations": [
+          "PIE does not prove that ASLR is enabled in the runtime environment.",
+          "A stack-canary symbol or instruction does not prove that every function is protected.",
+          "RELRO classification is based on the GNU_RELRO segment and immediate-binding flags.",
+          "The inspection describes the binary, not the compiler flags that produced it."
+        ]
+      },
+      "patched": {
+        "schema_version": "1.0",
+        "analysis_type": "elf_hardening",
+        "binary": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/release/source/tlvparse",
+        "binary_sha256": "db57791d8e3e287e9632c7b53b99eb9f784047dbc76ca7345b5eb29918b4b29d",
+        "elf": {
+          "class": "ELF64",
+          "data": "2's complement, little endian",
+          "type": "DYN (Position-Independent Executable file)",
+          "machine": "Advanced Micro Devices X86-64"
+        },
+        "protections": {
+          "relro": {
+            "status": "full",
+            "reason": "GNU_RELRO is present and the dynamic section requests immediate binding (BIND_NOW/NOW).",
+            "evidence": {
+              "gnu_relro_segment": true,
+              "bind_now": true,
+              "dynamic_flags": [
+                "BIND_NOW",
+                "NOW",
+                "PIE"
+              ]
+            }
+          },
+          "pie": {
+            "status": "enabled",
+            "reason": "The ELF is ET_DYN and contains an interpreter, which is the PIE executable layout.",
+            "evidence": {
+              "elf_type": "DYN (Position-Independent Executable file)",
+              "has_interp": true,
+              "pie_dynamic_flag": true
+            }
+          },
+          "nx": {
+            "status": "enabled",
+            "reason": "The GNU_STACK segment is not marked executable.",
+            "evidence": {
+              "gnu_stack_flags": "RW"
+            }
+          },
+          "stack_canary": {
+            "status": "present",
+            "reason": "The binary references the stack-protector runtime symbol.",
+            "evidence": {
+              "symbols": [
+                "__stack_chk_fail"
+              ],
+              "canary_instruction_count": 2
+            }
+          }
+        },
+        "evidence": {
+          "commands": [
+            [
+              "readelf",
+              "-hW",
+              "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/release/source/tlvparse"
+            ],
+            [
+              "readelf",
+              "-lW",
+              "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/release/source/tlvparse"
+            ],
+            [
+              "readelf",
+              "-dW",
+              "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/release/source/tlvparse"
+            ],
+            [
+              "readelf",
+              "-sW",
+              "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/release/source/tlvparse"
+            ],
+            [
+              "objdump",
+              "-d",
+              "--no-show-raw-insn",
+              "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/release/source/tlvparse"
+            ]
+          ],
+          "program_headers": {
+            "has_gnu_relro": true,
+            "has_interp": true,
+            "gnu_stack_flags": "RW",
+            "load_segments": 4
+          },
+          "dynamic": {
+            "bind_now": true,
+            "pie_flag": true,
+            "flags": [
+              "BIND_NOW",
+              "NOW",
+              "PIE"
+            ]
+          },
+          "symbols": {
+            "stack_canary_symbols": [
+              "__stack_chk_fail"
+            ],
+            "has_stack_canary_symbol": true
+          },
+          "disassembly": {
+            "canary_instruction_count": 2,
+            "has_canary_instruction": true
+          }
+        },
+        "limitations": [
+          "PIE does not prove that ASLR is enabled in the runtime environment.",
+          "A stack-canary symbol or instruction does not prove that every function is protected.",
+          "RELRO classification is based on the GNU_RELRO segment and immediate-binding flags.",
+          "The inspection describes the binary, not the compiler flags that produced it."
+        ]
+      }
+    },
+    "errors": [],
+    "comparison": {
+      "schema_version": "1.0",
+      "analysis_type": "elf_hardening_comparison",
+      "base_binary_sha256": "305a600392797ab0d474c1d11e81cd1906ff0202fcbf78f4136826137d46f4db",
+      "patched_binary_sha256": "db57791d8e3e287e9632c7b53b99eb9f784047dbc76ca7345b5eb29918b4b29d",
+      "changes": [],
+      "warnings": [],
+      "unexpected_changes": []
+    },
+    "requirements": {
+      "base": {
+        "compliant": true,
+        "results": [
+          {
+            "protection": "relro",
+            "expected": "full",
+            "observed": "full",
+            "compliant": true,
+            "reason": "GNU_RELRO is present and the dynamic section requests immediate binding (BIND_NOW/NOW)."
+          },
+          {
+            "protection": "pie",
+            "expected": "enabled",
+            "observed": "enabled",
+            "compliant": true,
+            "reason": "The ELF is ET_DYN and contains an interpreter, which is the PIE executable layout."
+          },
+          {
+            "protection": "nx",
+            "expected": "enabled",
+            "observed": "enabled",
+            "compliant": true,
+            "reason": "The GNU_STACK segment is not marked executable."
+          },
+          {
+            "protection": "stack_canary",
+            "expected": "present",
+            "observed": "present",
+            "compliant": true,
+            "reason": "The binary references the stack-protector runtime symbol."
+          }
+        ]
+      },
+      "patched": {
+        "compliant": true,
+        "results": [
+          {
+            "protection": "relro",
+            "expected": "full",
+            "observed": "full",
+            "compliant": true,
+            "reason": "GNU_RELRO is present and the dynamic section requests immediate binding (BIND_NOW/NOW)."
+          },
+          {
+            "protection": "pie",
+            "expected": "enabled",
+            "observed": "enabled",
+            "compliant": true,
+            "reason": "The ELF is ET_DYN and contains an interpreter, which is the PIE executable layout."
+          },
+          {
+            "protection": "nx",
+            "expected": "enabled",
+            "observed": "enabled",
+            "compliant": true,
+            "reason": "The GNU_STACK segment is not marked executable."
+          },
+          {
+            "protection": "stack_canary",
+            "expected": "present",
+            "observed": "present",
+            "compliant": true,
+            "reason": "The binary references the stack-protector runtime symbol."
+          }
+        ]
+      }
+    }
+  },
+  "reference_verification": {
+    "schema_version": "1.0",
+    "analysis_type": "reference_oracle_verification",
+    "checks": [
+      {
+        "test_id": "FUN-VALID",
+        "version": "base",
+        "version_label": "base",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "FUN-VALID",
+        "version": "patched",
+        "version_label": "incomplete",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "FUN-BOUNDARY",
+        "version": "base",
+        "version_label": "base",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "FUN-BOUNDARY",
+        "version": "patched",
+        "version_label": "incomplete",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "INV-TRUNCATED",
+        "version": "base",
+        "version_label": "base",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "INV-TRUNCATED",
+        "version": "patched",
+        "version_label": "incomplete",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "INV-TYPE",
+        "version": "base",
+        "version_label": "base",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "INV-TYPE",
+        "version": "patched",
+        "version_label": "incomplete",
+        "expected": "pass",
+        "observed": "pass",
+        "matches": true
+      },
+      {
+        "test_id": "SEC-ORIGINAL",
+        "version": "base",
+        "version_label": "base",
+        "expected": "vulnerable",
+        "observed": "vulnerable",
+        "matches": true
+      },
+      {
+        "test_id": "SEC-ORIGINAL",
+        "version": "patched",
+        "version_label": "incomplete",
+        "expected": "fixed",
+        "observed": "fixed",
+        "matches": true
+      },
+      {
+        "test_id": "SEC-ALTERNATE",
+        "version": "base",
+        "version_label": "base",
+        "expected": "vulnerable",
+        "observed": "vulnerable",
+        "matches": true
+      },
+      {
+        "test_id": "SEC-ALTERNATE",
+        "version": "patched",
+        "version_label": "incomplete",
+        "expected": "vulnerable",
+        "observed": "vulnerable",
+        "matches": true
+      }
+    ],
+    "mismatches": [],
+    "verified_versions": [
+      "base",
+      "incomplete"
+    ]
+  },
+  "reproducers": {
+    "schema_version": "1.0",
+    "analysis_type": "target_reproducers",
+    "target_id": "tlvparse",
+    "scenario": "incomplete",
+    "repetitions": 3,
+    "bundles": [
+      {
+        "test_id": "SEC-ORIGINAL",
+        "original": {
+          "input": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/SEC-ORIGINAL/original/overflow-200.tlv",
+          "metadata": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/SEC-ORIGINAL/original/metadata.json",
+          "replay_status": "STABLE"
+        },
+        "minimized": {
+          "input": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/SEC-ORIGINAL/minimized/overflow-200.tlv",
+          "metadata": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/SEC-ORIGINAL/minimized/metadata.json",
+          "replay_status": "STABLE",
+          "original_size": 204,
+          "minimized_size": 67,
+          "reduction_ratio": 0.6715686274509803,
+          "test_count": 727,
+          "validated": true
+        },
+        "regression_test": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/regression/tlvparse-SEC-ORIGINAL.input",
+        "regression_validation": "VULN_REMAINS"
+      },
+      {
+        "test_id": "SEC-ALTERNATE",
+        "original": {
+          "input": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/SEC-ALTERNATE/original/overflow-64.tlv",
+          "metadata": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/SEC-ALTERNATE/original/metadata.json",
+          "replay_status": "STABLE"
+        },
+        "minimized": {
+          "input": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/SEC-ALTERNATE/minimized/overflow-64.tlv",
+          "metadata": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/SEC-ALTERNATE/minimized/metadata.json",
+          "replay_status": "STABLE",
+          "original_size": 68,
+          "minimized_size": 66,
+          "reduction_ratio": 0.029411764705882353,
+          "test_count": 383,
+          "validated": true
+        },
+        "regression_test": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/regression/tlvparse-SEC-ALTERNATE.input",
+        "regression_validation": "VULN_REMAINS"
+      }
+    ],
+    "regression_tests": [
+      {
+        "test_id": "SEC-ORIGINAL",
+        "input": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/regression/tlvparse-SEC-ORIGINAL.input",
+        "validation": {
+          "status": "VULN_REMAINS",
+          "stability": {
+            "base": "STABLE",
+            "patched": "STABLE",
+            "overall": "STABLE"
+          },
+          "base": {
+            "matches_expected_error": true,
+            "results": [
+              {
+                "command": [
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse",
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/regression/tlvparse-SEC-ORIGINAL.input"
+                ],
+                "returncode": null,
+                "signal": "SIGABRT",
+                "stdout": "",
+                "stderr": "=================================================================\n==880==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffffffca8dc at pc 0x7fffff16d061 bp 0x7ffffffca830 sp 0x7ffffffc9fe0\nWRITE of size 65 at 0x7ffffffca8dc thread T0\n    #0 0x7fffff16d060 in __interceptor_memcpy ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827\n    #1 0x555555556740 in parse_message /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c:39\n    #2 0x555555556740 in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c:77\n    #3 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #4 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #5 0x5555555561e0 in _start (/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse+0x21e0)\n\nAddress 0x7ffffffca8dc is located in stack of thread T0 at offset 92 in frame\n    #0 0x5555555562b8 in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c:61\n\n  This frame has 1 object(s):\n    [48, 92) 'msg' (line 62) <== Memory access at offset 92 overflows this variable\nHINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork\n      (longjmp and C++ exceptions *are* supported)\nSUMMARY: AddressSanitizer: stack-buffer-overflow ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827 in __interceptor_memcpy\nShadow bytes around the buggy address:\n  0x10007fff14c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x10007fff1510: f1 f1 f1 f1 f1 f1 00 00 00 00 00[04]f3 f3 f3 f3\n  0x10007fff1520: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1530: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1540: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1550: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1560: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==880==ABORTING\n",
+                "timed_out": false,
+                "error_type": "SIGABRT"
+              },
+              {
+                "command": [
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse",
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/regression/tlvparse-SEC-ORIGINAL.input"
+                ],
+                "returncode": null,
+                "signal": "SIGABRT",
+                "stdout": "",
+                "stderr": "=================================================================\n==881==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffffffca75c at pc 0x7fffff16d061 bp 0x7ffffffca6b0 sp 0x7ffffffc9e60\nWRITE of size 65 at 0x7ffffffca75c thread T0\n    #0 0x7fffff16d060 in __interceptor_memcpy ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827\n    #1 0x555555556740 in parse_message /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c:39\n    #2 0x555555556740 in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c:77\n    #3 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #4 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #5 0x5555555561e0 in _start (/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse+0x21e0)\n\nAddress 0x7ffffffca75c is located in stack of thread T0 at offset 92 in frame\n    #0 0x5555555562b8 in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c:61\n\n  This frame has 1 object(s):\n    [48, 92) 'msg' (line 62) <== Memory access at offset 92 overflows this variable\nHINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork\n      (longjmp and C++ exceptions *are* supported)\nSUMMARY: AddressSanitizer: stack-buffer-overflow ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827 in __interceptor_memcpy\nShadow bytes around the buggy address:\n  0x10007fff1490: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x10007fff14e0: f1 f1 f1 f1 f1 f1 00 00 00 00 00[04]f3 f3 f3 f3\n  0x10007fff14f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1510: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1520: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1530: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==881==ABORTING\n",
+                "timed_out": false,
+                "error_type": "SIGABRT"
+              },
+              {
+                "command": [
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse",
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/regression/tlvparse-SEC-ORIGINAL.input"
+                ],
+                "returncode": null,
+                "signal": "SIGABRT",
+                "stdout": "",
+                "stderr": "=================================================================\n==882==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffffffca8ac at pc 0x7fffff16d061 bp 0x7ffffffca800 sp 0x7ffffffc9fb0\nWRITE of size 65 at 0x7ffffffca8ac thread T0\n    #0 0x7fffff16d060 in __interceptor_memcpy ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827\n    #1 0x555555556740 in parse_message /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c:39\n    #2 0x555555556740 in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c:77\n    #3 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #4 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #5 0x5555555561e0 in _start (/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse+0x21e0)\n\nAddress 0x7ffffffca8ac is located in stack of thread T0 at offset 92 in frame\n    #0 0x5555555562b8 in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c:61\n\n  This frame has 1 object(s):\n    [48, 92) 'msg' (line 62) <== Memory access at offset 92 overflows this variable\nHINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork\n      (longjmp and C++ exceptions *are* supported)\nSUMMARY: AddressSanitizer: stack-buffer-overflow ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827 in __interceptor_memcpy\nShadow bytes around the buggy address:\n  0x10007fff14c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1500: 00 00 00 00 00 00 00 00 00 00 f1 f1 f1 f1 f1 f1\n=>0x10007fff1510: 00 00 00 00 00[04]f3 f3 f3 f3 00 00 00 00 00 00\n  0x10007fff1520: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1530: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1540: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1550: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1560: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==882==ABORTING\n",
+                "timed_out": false,
+                "error_type": "SIGABRT"
+              }
+            ]
+          },
+          "patched": {
+            "same_error_absent": false,
+            "expected_behavior": false,
+            "results": [
+              {
+                "command": [
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse",
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/regression/tlvparse-SEC-ORIGINAL.input"
+                ],
+                "returncode": null,
+                "signal": "SIGABRT",
+                "stdout": "",
+                "stderr": "=================================================================\n==883==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffffffca73c at pc 0x7fffff16d061 bp 0x7ffffffca690 sp 0x7ffffffc9e40\nWRITE of size 65 at 0x7ffffffca73c thread T0\n    #0 0x7fffff16d060 in __interceptor_memcpy ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827\n    #1 0x55555555674a in parse_message /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c:43\n    #2 0x55555555674a in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c:81\n    #3 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #4 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #5 0x5555555561e0 in _start (/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse+0x21e0)\n\nAddress 0x7ffffffca73c is located in stack of thread T0 at offset 92 in frame\n    #0 0x5555555562b8 in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c:65\n\n  This frame has 1 object(s):\n    [48, 92) 'msg' (line 66) <== Memory access at offset 92 overflows this variable\nHINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork\n      (longjmp and C++ exceptions *are* supported)\nSUMMARY: AddressSanitizer: stack-buffer-overflow ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827 in __interceptor_memcpy\nShadow bytes around the buggy address:\n  0x10007fff1490: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14d0: 00 00 00 00 00 00 00 00 00 00 00 00 f1 f1 f1 f1\n=>0x10007fff14e0: f1 f1 00 00 00 00 00[04]f3 f3 f3 f3 00 00 00 00\n  0x10007fff14f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1510: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1520: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1530: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==883==ABORTING\n",
+                "timed_out": false,
+                "error_type": "SIGABRT"
+              },
+              {
+                "command": [
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse",
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/regression/tlvparse-SEC-ORIGINAL.input"
+                ],
+                "returncode": null,
+                "signal": "SIGABRT",
+                "stdout": "",
+                "stderr": "=================================================================\n==884==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffffffca80c at pc 0x7fffff16d061 bp 0x7ffffffca760 sp 0x7ffffffc9f10\nWRITE of size 65 at 0x7ffffffca80c thread T0\n    #0 0x7fffff16d060 in __interceptor_memcpy ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827\n    #1 0x55555555674a in parse_message /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c:43\n    #2 0x55555555674a in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c:81\n    #3 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #4 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #5 0x5555555561e0 in _start (/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse+0x21e0)\n\nAddress 0x7ffffffca80c is located in stack of thread T0 at offset 92 in frame\n    #0 0x5555555562b8 in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c:65\n\n  This frame has 1 object(s):\n    [48, 92) 'msg' (line 66) <== Memory access at offset 92 overflows this variable\nHINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork\n      (longjmp and C++ exceptions *are* supported)\nSUMMARY: AddressSanitizer: stack-buffer-overflow ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827 in __interceptor_memcpy\nShadow bytes around the buggy address:\n  0x10007fff14b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14f0: 00 00 00 00 00 00 f1 f1 f1 f1 f1 f1 00 00 00 00\n=>0x10007fff1500: 00[04]f3 f3 f3 f3 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1510: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1520: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1530: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1540: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1550: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==884==ABORTING\n",
+                "timed_out": false,
+                "error_type": "SIGABRT"
+              },
+              {
+                "command": [
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse",
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/regression/tlvparse-SEC-ORIGINAL.input"
+                ],
+                "returncode": null,
+                "signal": "SIGABRT",
+                "stdout": "",
+                "stderr": "=================================================================\n==885==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffffffca75c at pc 0x7fffff16d061 bp 0x7ffffffca6b0 sp 0x7ffffffc9e60\nWRITE of size 65 at 0x7ffffffca75c thread T0\n    #0 0x7fffff16d060 in __interceptor_memcpy ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827\n    #1 0x55555555674a in parse_message /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c:43\n    #2 0x55555555674a in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c:81\n    #3 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #4 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #5 0x5555555561e0 in _start (/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse+0x21e0)\n\nAddress 0x7ffffffca75c is located in stack of thread T0 at offset 92 in frame\n    #0 0x5555555562b8 in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c:65\n\n  This frame has 1 object(s):\n    [48, 92) 'msg' (line 66) <== Memory access at offset 92 overflows this variable\nHINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork\n      (longjmp and C++ exceptions *are* supported)\nSUMMARY: AddressSanitizer: stack-buffer-overflow ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827 in __interceptor_memcpy\nShadow bytes around the buggy address:\n  0x10007fff1490: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x10007fff14e0: f1 f1 f1 f1 f1 f1 00 00 00 00 00[04]f3 f3 f3 f3\n  0x10007fff14f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1510: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1520: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1530: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==885==ABORTING\n",
+                "timed_out": false,
+                "error_type": "SIGABRT"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "test_id": "SEC-ALTERNATE",
+        "input": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/regression/tlvparse-SEC-ALTERNATE.input",
+        "validation": {
+          "status": "VULN_REMAINS",
+          "stability": {
+            "base": "STABLE",
+            "patched": "STABLE",
+            "overall": "STABLE"
+          },
+          "base": {
+            "matches_expected_error": true,
+            "results": [
+              {
+                "command": [
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse",
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/regression/tlvparse-SEC-ALTERNATE.input"
+                ],
+                "returncode": null,
+                "signal": "SIGABRT",
+                "stdout": "",
+                "stderr": "=================================================================\n==1275==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffffffca8ac at pc 0x7fffff16d061 bp 0x7ffffffca800 sp 0x7ffffffc9fb0\nWRITE of size 64 at 0x7ffffffca8ac thread T0\n    #0 0x7fffff16d060 in __interceptor_memcpy ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827\n    #1 0x555555556740 in parse_message /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c:39\n    #2 0x555555556740 in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c:77\n    #3 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #4 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #5 0x5555555561e0 in _start (/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse+0x21e0)\n\nAddress 0x7ffffffca8ac is located in stack of thread T0 at offset 92 in frame\n    #0 0x5555555562b8 in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c:61\n\n  This frame has 1 object(s):\n    [48, 92) 'msg' (line 62) <== Memory access at offset 92 overflows this variable\nHINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork\n      (longjmp and C++ exceptions *are* supported)\nSUMMARY: AddressSanitizer: stack-buffer-overflow ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827 in __interceptor_memcpy\nShadow bytes around the buggy address:\n  0x10007fff14c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1500: 00 00 00 00 00 00 00 00 00 00 f1 f1 f1 f1 f1 f1\n=>0x10007fff1510: 00 00 00 00 00[04]f3 f3 f3 f3 00 00 00 00 00 00\n  0x10007fff1520: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1530: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1540: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1550: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1560: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==1275==ABORTING\n",
+                "timed_out": false,
+                "error_type": "SIGABRT"
+              },
+              {
+                "command": [
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse",
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/regression/tlvparse-SEC-ALTERNATE.input"
+                ],
+                "returncode": null,
+                "signal": "SIGABRT",
+                "stdout": "",
+                "stderr": "=================================================================\n==1276==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffffffca79c at pc 0x7fffff16d061 bp 0x7ffffffca6f0 sp 0x7ffffffc9ea0\nWRITE of size 64 at 0x7ffffffca79c thread T0\n    #0 0x7fffff16d060 in __interceptor_memcpy ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827\n    #1 0x555555556740 in parse_message /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c:39\n    #2 0x555555556740 in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c:77\n    #3 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #4 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #5 0x5555555561e0 in _start (/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse+0x21e0)\n\nAddress 0x7ffffffca79c is located in stack of thread T0 at offset 92 in frame\n    #0 0x5555555562b8 in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c:61\n\n  This frame has 1 object(s):\n    [48, 92) 'msg' (line 62) <== Memory access at offset 92 overflows this variable\nHINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork\n      (longjmp and C++ exceptions *are* supported)\nSUMMARY: AddressSanitizer: stack-buffer-overflow ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827 in __interceptor_memcpy\nShadow bytes around the buggy address:\n  0x10007fff14a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14e0: 00 00 00 00 00 00 00 00 f1 f1 f1 f1 f1 f1 00 00\n=>0x10007fff14f0: 00 00 00[04]f3 f3 f3 f3 00 00 00 00 00 00 00 00\n  0x10007fff1500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1510: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1520: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1530: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1540: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==1276==ABORTING\n",
+                "timed_out": false,
+                "error_type": "SIGABRT"
+              },
+              {
+                "command": [
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse",
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/regression/tlvparse-SEC-ALTERNATE.input"
+                ],
+                "returncode": null,
+                "signal": "SIGABRT",
+                "stdout": "",
+                "stderr": "=================================================================\n==1277==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffffffca89c at pc 0x7fffff16d061 bp 0x7ffffffca7f0 sp 0x7ffffffc9fa0\nWRITE of size 64 at 0x7ffffffca89c thread T0\n    #0 0x7fffff16d060 in __interceptor_memcpy ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827\n    #1 0x555555556740 in parse_message /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c:39\n    #2 0x555555556740 in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c:77\n    #3 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #4 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #5 0x5555555561e0 in _start (/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse+0x21e0)\n\nAddress 0x7ffffffca89c is located in stack of thread T0 at offset 92 in frame\n    #0 0x5555555562b8 in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/base/asan_ubsan/source/tlvparse.c:61\n\n  This frame has 1 object(s):\n    [48, 92) 'msg' (line 62) <== Memory access at offset 92 overflows this variable\nHINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork\n      (longjmp and C++ exceptions *are* supported)\nSUMMARY: AddressSanitizer: stack-buffer-overflow ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827 in __interceptor_memcpy\nShadow bytes around the buggy address:\n  0x10007fff14c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1500: 00 00 00 00 00 00 00 00 f1 f1 f1 f1 f1 f1 00 00\n=>0x10007fff1510: 00 00 00[04]f3 f3 f3 f3 00 00 00 00 00 00 00 00\n  0x10007fff1520: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1530: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1540: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1550: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1560: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==1277==ABORTING\n",
+                "timed_out": false,
+                "error_type": "SIGABRT"
+              }
+            ]
+          },
+          "patched": {
+            "same_error_absent": false,
+            "expected_behavior": false,
+            "results": [
+              {
+                "command": [
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse",
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/regression/tlvparse-SEC-ALTERNATE.input"
+                ],
+                "returncode": null,
+                "signal": "SIGABRT",
+                "stdout": "",
+                "stderr": "=================================================================\n==1278==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffffffca85c at pc 0x7fffff16d061 bp 0x7ffffffca7b0 sp 0x7ffffffc9f60\nWRITE of size 64 at 0x7ffffffca85c thread T0\n    #0 0x7fffff16d060 in __interceptor_memcpy ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827\n    #1 0x55555555674a in parse_message /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c:43\n    #2 0x55555555674a in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c:81\n    #3 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #4 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #5 0x5555555561e0 in _start (/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse+0x21e0)\n\nAddress 0x7ffffffca85c is located in stack of thread T0 at offset 92 in frame\n    #0 0x5555555562b8 in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c:65\n\n  This frame has 1 object(s):\n    [48, 92) 'msg' (line 66) <== Memory access at offset 92 overflows this variable\nHINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork\n      (longjmp and C++ exceptions *are* supported)\nSUMMARY: AddressSanitizer: stack-buffer-overflow ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827 in __interceptor_memcpy\nShadow bytes around the buggy address:\n  0x10007fff14b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x10007fff1500: f1 f1 f1 f1 f1 f1 00 00 00 00 00[04]f3 f3 f3 f3\n  0x10007fff1510: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1520: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1530: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1540: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1550: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==1278==ABORTING\n",
+                "timed_out": false,
+                "error_type": "SIGABRT"
+              },
+              {
+                "command": [
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse",
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/regression/tlvparse-SEC-ALTERNATE.input"
+                ],
+                "returncode": null,
+                "signal": "SIGABRT",
+                "stdout": "",
+                "stderr": "=================================================================\n==1279==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffffffca74c at pc 0x7fffff16d061 bp 0x7ffffffca6a0 sp 0x7ffffffc9e50\nWRITE of size 64 at 0x7ffffffca74c thread T0\n    #0 0x7fffff16d060 in __interceptor_memcpy ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827\n    #1 0x55555555674a in parse_message /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c:43\n    #2 0x55555555674a in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c:81\n    #3 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #4 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #5 0x5555555561e0 in _start (/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse+0x21e0)\n\nAddress 0x7ffffffca74c is located in stack of thread T0 at offset 92 in frame\n    #0 0x5555555562b8 in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c:65\n\n  This frame has 1 object(s):\n    [48, 92) 'msg' (line 66) <== Memory access at offset 92 overflows this variable\nHINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork\n      (longjmp and C++ exceptions *are* supported)\nSUMMARY: AddressSanitizer: stack-buffer-overflow ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827 in __interceptor_memcpy\nShadow bytes around the buggy address:\n  0x10007fff1490: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 f1 f1\n=>0x10007fff14e0: f1 f1 f1 f1 00 00 00 00 00[04]f3 f3 f3 f3 00 00\n  0x10007fff14f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1510: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1520: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1530: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==1279==ABORTING\n",
+                "timed_out": false,
+                "error_type": "SIGABRT"
+              },
+              {
+                "command": [
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse",
+                  "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reproducers/regression/tlvparse-SEC-ALTERNATE.input"
+                ],
+                "returncode": null,
+                "signal": "SIGABRT",
+                "stdout": "",
+                "stderr": "=================================================================\n==1280==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffffffca86c at pc 0x7fffff16d061 bp 0x7ffffffca7c0 sp 0x7ffffffc9f70\nWRITE of size 64 at 0x7ffffffca86c thread T0\n    #0 0x7fffff16d060 in __interceptor_memcpy ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827\n    #1 0x55555555674a in parse_message /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c:43\n    #2 0x55555555674a in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c:81\n    #3 0x7ffffe938249  (/lib/x86_64-linux-gnu/libc.so.6+0x27249)\n    #4 0x7ffffe938304 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x27304)\n    #5 0x5555555561e0 in _start (/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse+0x21e0)\n\nAddress 0x7ffffffca86c is located in stack of thread T0 at offset 92 in frame\n    #0 0x5555555562b8 in main /project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution/spv-execution-x0t98gmk/builds/patched/asan_ubsan/source/tlvparse.c:65\n\n  This frame has 1 object(s):\n    [48, 92) 'msg' (line 66) <== Memory access at offset 92 overflows this variable\nHINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork\n      (longjmp and C++ exceptions *are* supported)\nSUMMARY: AddressSanitizer: stack-buffer-overflow ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:827 in __interceptor_memcpy\nShadow bytes around the buggy address:\n  0x10007fff14b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff14f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x10007fff1500: 00 00 f1 f1 f1 f1 f1 f1 00 00 00 00 00[04]f3 f3\n  0x10007fff1510: f3 f3 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1520: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1530: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1540: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x10007fff1550: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==1280==ABORTING\n",
+                "timed_out": false,
+                "error_type": "SIGABRT"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "diff_summary": {
+    "files_analyzed": 1,
+    "files_with_text_changes": 1,
+    "binary_files": 0,
+    "mode_changed_files": 0,
+    "hunks": 1,
+    "added_lines": 4,
+    "removed_lines": 0
+  },
+  "execution_summary": {
+    "status": "completed",
+    "builds": [
+      {
+        "version": "base",
+        "build_type": "release",
+        "status": "built",
+        "binary_sha256": "305a600392797ab0d474c1d11e81cd1906ff0202fcbf78f4136826137d46f4db",
+        "error": null
+      },
+      {
+        "version": "patched",
+        "build_type": "release",
+        "status": "built",
+        "binary_sha256": "db57791d8e3e287e9632c7b53b99eb9f784047dbc76ca7345b5eb29918b4b29d",
+        "error": null
+      },
+      {
+        "version": "base",
+        "build_type": "asan_ubsan",
+        "status": "built",
+        "binary_sha256": "836de5b84ead1839640ddc16a2ac0dd0ae8b9d92561e1f2d4c113f149571957f",
+        "error": null
+      },
+      {
+        "version": "patched",
+        "build_type": "asan_ubsan",
+        "status": "built",
+        "binary_sha256": "a5ac72359be0320787f2015e099d199a1c2064a8cfd2f85604657db286314f34",
+        "error": null
+      }
+    ],
+    "executions": 72,
+    "skipped": 0
+  },
+  "artifacts": {
+    "workspace": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw",
+    "execution": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/execution.json",
+    "hardening": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/hardening.json",
+    "diff": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/diff.json",
+    "classification": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/classification.json",
+    "classifier_suite": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/classifier-suite.json",
+    "reference_verification": "/project/artifacts/tlvparse-incomplete/spv-tlvparse-incomplete-px2mitlw/reference-verification.json"
+  },
+  "limitations": [
+    "A FIXED result means the target issue was not observed in the configured tests; it does not prove global safety.",
+    "Hardening warnings describe the built binaries and do not by themselves prove exploitability.",
+    "The reference oracle is independent of the patched program's output, but it is limited to the configured tests."
+  ]
+}

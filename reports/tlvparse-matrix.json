@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "analysis_type": "target_scenario_matrix",
+  "target_id": "tlvparse",
+  "all_scenarios_match_expected": true,
+  "scenarios": {
+    "correct": {
+      "expected_exit_code": 0,
+      "observed_exit_code": 0,
+      "matches_expected_exit_code": true,
+      "statuses": [
+        "FIXED"
+      ],
+      "artifacts": "/project/artifacts/tlvparse-matrix/correct/spv-tlvparse-correct-13ror385"
+    },
+    "incomplete": {
+      "expected_exit_code": 10,
+      "observed_exit_code": 10,
+      "matches_expected_exit_code": true,
+      "statuses": [
+        "INCOMPLETE_FIX"
+      ],
+      "artifacts": "/project/artifacts/tlvparse-matrix/incomplete/spv-tlvparse-incomplete-fbkfbs_4"
+    },
+    "regression": {
+      "expected_exit_code": 20,
+      "observed_exit_code": 20,
+      "matches_expected_exit_code": true,
+      "statuses": [
+        "FIXED",
+        "FUNCTIONAL_REGRESSION"
+      ],
+      "artifacts": "/project/artifacts/tlvparse-matrix/regression/spv-tlvparse-regression-kw90743s"
+    }
+  }
+}

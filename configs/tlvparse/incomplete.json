@@ -1,0 +1,178 @@
+{
+  "target_id": "tlvparse",
+  "versions": {
+    "base": {
+      "source_dir": "../../targets/tlvparse/versions/base"
+    },
+    "patched": {
+      "source_dir": "../../targets/tlvparse/versions/incomplete"
+    }
+  },
+  "build": {
+    "binary": "tlvparse",
+    "commands": [
+      [
+        "gcc",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "{flags}",
+        "-fstack-protector-strong",
+        "-fPIE",
+        "-pie",
+        "-Wl,-z,relro,-z,now",
+        "tlvparse.c",
+        "-o",
+        "tlvparse"
+      ]
+    ],
+    "translation_units": [
+      "tlvparse.c"
+    ]
+  },
+  "limits": {
+    "build_timeout": 60,
+    "timeout": 5,
+    "max_output_bytes": 65536
+  },
+  "tests": [
+    {
+      "id": "FUN-VALID",
+      "category": "valid",
+      "input": {
+        "mode": "file",
+        "path": "../../targets/tlvparse/inputs/valid.tlv",
+        "name": "valid.tlv"
+      },
+      "args": [
+        "{input}"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "name=alice-0123456789\nid=305419896\n"
+      },
+      "reference": "targets/tlvparse/reference-tests.json#FUN-VALID",
+      "classifier": {
+        "kind": "functional",
+        "validity": "valid",
+        "build_type": "release",
+        "reference": {
+          "exit_code": 0,
+          "stdout": "name=alice-0123456789\nid=305419896\n"
+        }
+      }
+    },
+    {
+      "id": "FUN-BOUNDARY",
+      "category": "boundary",
+      "input": {
+        "mode": "file",
+        "path": "../../targets/tlvparse/inputs/boundary.tlv",
+        "name": "boundary.tlv"
+      },
+      "args": [
+        "{input}"
+      ],
+      "expected": {
+        "exit_code": 0,
+        "stdout": "name=abcdefghijklmnopqrstuvwxyz01234\nid=1\n"
+      },
+      "reference": "targets/tlvparse/reference-tests.json#FUN-BOUNDARY",
+      "classifier": {
+        "kind": "functional",
+        "validity": "valid",
+        "build_type": "release",
+        "reference": {
+          "exit_code": 0,
+          "stdout": "name=abcdefghijklmnopqrstuvwxyz01234\nid=1\n"
+        }
+      }
+    },
+    {
+      "id": "INV-TRUNCATED",
+      "category": "invalid",
+      "input": {
+        "mode": "file",
+        "path": "../../targets/tlvparse/inputs/invalid-truncated.tlv",
+        "name": "invalid-truncated.tlv"
+      },
+      "args": [
+        "{input}"
+      ],
+      "expected": {
+        "exit_code": 2,
+        "stdout": ""
+      },
+      "reference": "targets/tlvparse/reference-tests.json#INV-TRUNCATED"
+    },
+    {
+      "id": "INV-TYPE",
+      "category": "invalid",
+      "input": {
+        "mode": "file",
+        "path": "../../targets/tlvparse/inputs/invalid-type.tlv",
+        "name": "invalid-type.tlv"
+      },
+      "args": [
+        "{input}"
+      ],
+      "expected": {
+        "exit_code": 2,
+        "stdout": ""
+      },
+      "reference": "targets/tlvparse/reference-tests.json#INV-TYPE"
+    },
+    {
+      "id": "SEC-ORIGINAL",
+      "category": "invalid",
+      "input": {
+        "mode": "file",
+        "path": "../../targets/tlvparse/inputs/overflow-200.tlv",
+        "name": "overflow-200.tlv"
+      },
+      "args": [
+        "{input}"
+      ],
+      "expected": {
+        "exit_code": 2,
+        "stdout": ""
+      },
+      "reference": "targets/tlvparse/reference-tests.json#SEC-ORIGINAL",
+      "classifier": {
+        "kind": "security",
+        "build_type": "asan_ubsan",
+        "expected_patched": {
+          "exit_code": 2,
+          "stdout": ""
+        },
+        "role": "original"
+      }
+    },
+    {
+      "id": "SEC-ALTERNATE",
+      "category": "invalid",
+      "input": {
+        "mode": "file",
+        "path": "../../targets/tlvparse/inputs/overflow-64.tlv",
+        "name": "overflow-64.tlv"
+      },
+      "args": [
+        "{input}"
+      ],
+      "expected": {
+        "exit_code": 2,
+        "stdout": ""
+      },
+      "reference": "targets/tlvparse/reference-tests.json#SEC-ALTERNATE",
+      "classifier": {
+        "kind": "security",
+        "build_type": "asan_ubsan",
+        "expected_patched": {
+          "exit_code": 2,
+          "stdout": ""
+        },
+        "role": "alternate"
+      }
+    }
+  ]
+}

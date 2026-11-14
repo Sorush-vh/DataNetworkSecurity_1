@@ -1,0 +1,54 @@
+{
+    "tests": [
+        {
+            "name": "tlvparse-SEC-ORIGINAL",
+            "input_file": "tlvparse-SEC-ORIGINAL.input",
+            "sha256": "a4c3fceab37de4b4e821f6260c43bafb76871465c630bbcd24341ed1e4147056",
+            "error_type": "stack-buffer-overflow",
+            "expected_on_base": true,
+            "expected_on_patched": false,
+            "created_at": "2026-11-14T09:46:11.138659+00:00",
+            "target_id": "tlvparse",
+            "test_id": "SEC-ORIGINAL",
+            "mode": "file",
+            "args": [
+                "{input}"
+            ],
+            "input_name": "overflow-200.tlv",
+            "expected_patched": {
+                "exit_code": 2,
+                "stdout": ""
+            },
+            "signature": {
+                "error_type": "stack-buffer-overflow",
+                "file": "tlvparse.c",
+                "function": "parse_message"
+            }
+        },
+        {
+            "name": "tlvparse-SEC-ALTERNATE",
+            "input_file": "tlvparse-SEC-ALTERNATE.input",
+            "sha256": "3626d1b3b4b569156bd68819121ac098b542b82c352a58944ff4ab333a42a099",
+            "error_type": "stack-buffer-overflow",
+            "expected_on_base": true,
+            "expected_on_patched": false,
+            "created_at": "2026-11-14T09:46:11.139766+00:00",
+            "target_id": "tlvparse",
+            "test_id": "SEC-ALTERNATE",
+            "mode": "file",
+            "args": [
+                "{input}"
+            ],
+            "input_name": "overflow-64.tlv",
+            "expected_patched": {
+                "exit_code": 2,
+                "stdout": ""
+            },
+            "signature": {
+                "error_type": "stack-buffer-overflow",
+                "file": "tlvparse.c",
+                "function": "parse_message"
+            }
+        }
+    ]
+}
