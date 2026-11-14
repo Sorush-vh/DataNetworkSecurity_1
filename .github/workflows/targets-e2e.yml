@@ -1,0 +1,107 @@
+name: Targets and hardening
+
+on:
+  push:
+    paths:
+      - "src/**"
+      - "targets/**"
+      - "configs/**"
+      - "tests/**"
+      - "docker/**"
+      - "member3/**"
+      - ".github/workflows/targets-e2e.yml"
+  pull_request:
+    paths:
+      - "src/**"
+      - "targets/**"
+      - "configs/**"
+      - "tests/**"
+      - "docker/**"
+      - "member3/**"
+      - ".github/workflows/targets-e2e.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  unit-and-execution:
+    name: Unit and execution tests (Linux x86_64)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends gcc g++ make binutils git
+          python3 -m pip install --upgrade pip
+          python3 -m pip install pytest
+      - name: Run unit and integration tests
+        env:
+          PYTHONPATH: src
+        run: python3 -m pytest tests/unit tests/integration -q
+
+  target-scenarios:
+    name: Four-scenario matrix (${{ matrix.target }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [tlvparse, bzip2]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends gcc g++ make binutils git
+      - name: Validate target manifest
+        env:
+          PYTHONPATH: src
+        run: |
+          python3 -m security_patch_validator.cli targets validate \
+            --target targets/${{ matrix.target }}/target.json --pretty
+      - name: Run all three patch scenarios
+        env:
+          PYTHONPATH: src
+        run: |
+          python3 -m security_patch_validator.cli targets run-all \
+            --target targets/${{ matrix.target }}/target.json \
+            --artifacts-dir artifacts/${{ matrix.target }} \
+            --output reports/${{ matrix.target }}-matrix.json --pretty
+      - name: Upload scenario reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports-${{ matrix.target }}
+          path: reports/
+          if-no-files-found: ignore
+      - name: Upload reproducer summaries
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reproducers-${{ matrix.target }}
+          path: artifacts/${{ matrix.target }}/**/reproducers/*.json
+          if-no-files-found: ignore
+
+  docker-isolation:
+    name: Docker isolation smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build targets image
+        run: docker build -f docker/targets.Dockerfile -t spv-targets .
+      - name: Validate a manifest inside the container
+        run: |
+          mkdir -p reports artifacts
+          docker run --rm --network none \
+            -v "$PWD:/project" -w /project -e PYTHONPATH=src spv-targets \
+            python3 -m security_patch_validator.cli targets validate \
+            --target targets/tlvparse/target.json --pretty
